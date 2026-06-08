@@ -5,10 +5,10 @@ import com.coditas.powerbridge.dto.request.UserRequest;
 import com.coditas.powerbridge.dto.response.ApplicationResponse;
 import com.coditas.powerbridge.dto.response.UserResponse;
 import com.coditas.powerbridge.service.ManagementTeamMemberService;
+import com.coditas.powerbridge.service.StateHeadService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,24 +17,21 @@ import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
-public class ManagementTeamMemberController {
+public class StateHeadController {
 
-    private final ManagementTeamMemberService managementTeamMemberService;
+    private final StateHeadService stateHeadService;
 
-    @PreAuthorize("hasRole('SUPER_ADMIN')")
-    @PostMapping(ApiPaths.SuperAdmin.BASE + ApiPaths.SuperAdmin.ONBOARD_MANAGEMENT_TEAM_MEMBER)
-    public ResponseEntity<ApplicationResponse<UserResponse>> onboard(@Valid @RequestBody UserRequest userRequest){
-        UserResponse userResponse = managementTeamMemberService.onboard(userRequest);
+    @PostMapping(ApiPaths.ManagementTeam.MANAGEMENT_TEAM_MEMBER + ApiPaths.StateHead.ONBOARD_STATE_HEAD)
+    public ResponseEntity<ApplicationResponse<UserResponse>> onboardStateHead(@Valid @RequestBody UserRequest request){
+        UserResponse response = stateHeadService.onboard(request);
 
-        URI location = URI.create(ApiPaths.ManagementTeam.BASE
-                +"/"
-                +userResponse.getId());
-
+        URI location = URI.create(ApiPaths.StateHead.BASE
+                +"/"+response.getId());
         return ResponseEntity.created(location)
                 .body(ApplicationResponse.<UserResponse>builder()
                         .success(true)
-                        .message("Management team member is added successfully")
-                        .data(userResponse)
+                        .message("State head successfully onboarded")
+                        .data(response)
                         .build());
     }
 }

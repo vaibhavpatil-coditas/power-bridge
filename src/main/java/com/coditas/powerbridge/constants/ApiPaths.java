@@ -12,9 +12,15 @@ public final class ApiPaths {
 
         public static final String SALES_TEAM_MEMBER = "/sales-team-member";
         public static final String BASE = BASE_PATH + SALES_TEAM_MEMBER;
-        public static final String ONBOARD_SERVICE_PROVIDER = ON_BOARD + "/service-provider";
         public static final String ASSIGN_TASK = "/assign-task" + SalesTeam.SALES_TEAM_MEMBER;
         public static final String TASKS = "/tasks";
+        public static final String ONBOARD_SALES_TEAM_MEMBER = ON_BOARD + SalesTeam.SALES_TEAM_MEMBER;
+    }
+
+    public static final class ServiceProvider{
+        private ServiceProvider(){}
+
+        public static final String ONBOARD_SERVICE_PROVIDER = ON_BOARD + "/service-provider";
     }
 
     public static final class Employee {
@@ -43,8 +49,6 @@ public final class ApiPaths {
 
         public static final String MANAGEMENT_TEAM_MEMBER = "/management-team-member";
         public static final String BASE = BASE_PATH + MANAGEMENT_TEAM_MEMBER;
-        public static final String ONBOARD_SALES_TEAM_MEMBER = ON_BOARD + SalesTeam.SALES_TEAM_MEMBER;
-        public static final String ONBOARD_STATE_HEAD = ON_BOARD + StateHead.STATE_HEAD;
     }
 
     public static final class StateHead {
@@ -52,5 +56,6 @@ public final class ApiPaths {
 
         public static final String STATE_HEAD = "/state-head";
         public static final String BASE = BASE_PATH + STATE_HEAD;
+        public static final String ONBOARD_STATE_HEAD = ON_BOARD + STATE_HEAD;
     }
 }

@@ -4,7 +4,6 @@ import com.coditas.powerbridge.dto.request.UserRequest;
 import com.coditas.powerbridge.dto.response.UserResponse;
 import jakarta.validation.Valid;
 
-public interface SalesTeamMemberService {
-
-    UserResponse onboard(@Valid UserRequest userRequest);
+public interface StateHeadService {
+    UserResponse onboard(@Valid UserRequest request);
 }
