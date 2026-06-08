@@ -5,22 +5,21 @@ public final class ApiPaths {
 
     public static final String BASE_PATH = "/api/v1";
     public static final String ON_BOARD = "/onboard";
+    public static final String ID = "/{id}";
 
-    public static final class SalesTeam {
+    public static final class SalesTeamMember {
 
-        private SalesTeam(){}
+        private SalesTeamMember(){}
 
-        public static final String SALES_TEAM_MEMBER = "/sales-team-member";
-        public static final String BASE = BASE_PATH + SALES_TEAM_MEMBER;
-        public static final String ASSIGN_TASK = "/assign-task" + SalesTeam.SALES_TEAM_MEMBER;
+        public static final String BASE = BASE_PATH + "/sales-team-members";
         public static final String TASKS = "/tasks";
-        public static final String ONBOARD_SALES_TEAM_MEMBER = ON_BOARD + SalesTeam.SALES_TEAM_MEMBER;
     }
 
     public static final class ServiceProvider{
+
         private ServiceProvider(){}
 
-        public static final String ONBOARD_SERVICE_PROVIDER = ON_BOARD + "/service-provider";
+        public static final String BASE = BASE_PATH + "/service-providers";
     }
 
     public static final class Employee {
@@ -33,8 +32,6 @@ public final class ApiPaths {
         private SuperAdmin(){}
 
         public static final String BASE = BASE_PATH + "/super-admin";
-
-        public static final String ONBOARD_MANAGEMENT_TEAM_MEMBER = ON_BOARD + ManagementTeam.MANAGEMENT_TEAM_MEMBER;
     }
 
     public static final class Auth {
@@ -47,15 +44,25 @@ public final class ApiPaths {
     public static final class ManagementTeam {
         private ManagementTeam(){}
 
-        public static final String MANAGEMENT_TEAM_MEMBER = "/management-team-member";
-        public static final String BASE = BASE_PATH + MANAGEMENT_TEAM_MEMBER;
+        public static final String BASE = BASE_PATH + "/management-team-members";
     }
 
     public static final class StateHead {
         private StateHead() {}
 
-        public static final String STATE_HEAD = "/state-head";
-        public static final String BASE = BASE_PATH + STATE_HEAD;
-        public static final String ONBOARD_STATE_HEAD = ON_BOARD + STATE_HEAD;
+        public static final String BASE = BASE_PATH + "/state-heads";
+    }
+
+    public static final class Task {
+        private Task(){}
+
+        public static final String BASE = BASE_PATH + "/tasks";
+    }
+
+    public static final class State {
+        private State(){}
+
+        public static final String BASE = BASE_PATH + "/states";
+        public static final String HEAD = "/head";
     }
 }

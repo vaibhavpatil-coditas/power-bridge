@@ -12,5 +12,5 @@ public class TaskRequest {
     @NotBlank
     private String task;
     @NotNull
-    private Long salesTeamMemberId;
+    private Long assignedTo;
 }

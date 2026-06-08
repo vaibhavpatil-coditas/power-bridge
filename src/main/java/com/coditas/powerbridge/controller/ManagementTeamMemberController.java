@@ -11,18 +11,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 
 @RestController
+@RequestMapping(ApiPaths.ManagementTeam.BASE)
 @RequiredArgsConstructor
 public class ManagementTeamMemberController {
 
     private final ManagementTeamMemberService managementTeamMemberService;
 
+    @PostMapping
     @PreAuthorize("hasRole('SUPER_ADMIN')")
-    @PostMapping(ApiPaths.SuperAdmin.BASE + ApiPaths.SuperAdmin.ONBOARD_MANAGEMENT_TEAM_MEMBER)
     public ResponseEntity<ApplicationResponse<UserResponse>> onboard(@Valid @RequestBody UserRequest userRequest){
         UserResponse userResponse = managementTeamMemberService.onboard(userRequest);
 

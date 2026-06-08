@@ -6,9 +6,9 @@ import com.coditas.powerbridge.dto.response.TaskResponse;
 import com.coditas.powerbridge.entity.Task;
 import com.coditas.powerbridge.entity.User;
 import com.coditas.powerbridge.enums.Status;
+import com.coditas.powerbridge.exception.NotFoundException;
 import com.coditas.powerbridge.exception.ResourceAlreadyExistException;
 import com.coditas.powerbridge.exception.UserNotAuthenticatedException;
-import com.coditas.powerbridge.exception.UserNotFoundException;
 import com.coditas.powerbridge.mapper.TaskMapper;
 import com.coditas.powerbridge.repository.TaskRepository;
 import com.coditas.powerbridge.repository.UserRepository;
@@ -39,12 +39,12 @@ public class TaskServiceImpl implements TaskService {
             throw new UserNotAuthenticatedException(ExceptionMessage.USER_NOT_AUTHENTICATED);
         }
         User managementTeamMember = (User) authentication.getPrincipal();
-        User salesTeamMember = userRepository.findById(taskRequest.getSalesTeamMemberId())
-                .orElseThrow(()->new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND));
-        task.setManagementTeamMember(managementTeamMember);
+        User salesTeamMember = userRepository.findById(taskRequest.getAssignedTo())
+                .orElseThrow(()->new NotFoundException(ExceptionMessage.USER_NOT_FOUND));
+        task.setAssignedBy(managementTeamMember);
         task.setStatus(Status.INCOMPLETE);
         task.setAssignedAt(Instant.now());
-        task.setSalesTeamMember(salesTeamMember);
+        task.setAssignedTo(salesTeamMember);
         Task savedTask = taskRepository.save(task);
         return taskMapper.toTaskResponse(savedTask);
     }

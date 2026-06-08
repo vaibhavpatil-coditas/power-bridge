@@ -9,7 +9,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring",
         uses = UserMapper.class)
 public interface TaskMapper {
-    @Mapping(source = "salesTeamMemberId", target = "salesTeamMember.id")
+    @Mapping(source = "assignedTo", target = "assignedTo.id")
     Task toTask(TaskRequest taskRequest);
 
     TaskResponse toTaskResponse(Task savedTask);

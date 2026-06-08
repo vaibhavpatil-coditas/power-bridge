@@ -10,7 +10,7 @@ import org.hibernate.type.SqlTypes;
 import java.time.Instant;
 
 @Entity
-@Table(name = "assigned_tasks")
+@Table(name = "tasks")
 @Getter @Setter
 public class Task {
     @Id
@@ -19,12 +19,12 @@ public class Task {
     private String task;
 
     @ManyToOne
-    @JoinColumn(name = "sales_team_member_id")
-    private User salesTeamMember;
+    @JoinColumn(name = "assigned_to")
+    private User assignedTo;
 
     @ManyToOne
-    @JoinColumn(name = "management_team_member_id")
-    private User managementTeamMember;
+    @JoinColumn(name = "assigned_by")
+    private User assignedBy;
 
     @Enumerated(EnumType.STRING)
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
