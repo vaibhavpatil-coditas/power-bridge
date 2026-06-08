@@ -4,13 +4,17 @@ public final class ApiPaths {
     private ApiPaths() {}
 
     public static final String BASE_PATH = "/api/v1";
+    public static final String ON_BOARD = "/onboard";
 
     public static final class SalesTeam {
+
         private SalesTeam(){}
 
-        public static final String BASE = BASE_PATH + "/sales-team";
-
-        public static final String ON_BOARD = "/onboard";
+        public static final String SALES_TEAM_MEMBER = "/sales-team-member";
+        public static final String BASE = BASE_PATH + SALES_TEAM_MEMBER;
+        public static final String ONBOARD_SERVICE_PROVIDER = ON_BOARD + "/service-provider";
+        public static final String ASSIGN_TASK = "/assign-task" + SalesTeam.SALES_TEAM_MEMBER;
+        public static final String TASKS = "/tasks";
     }
 
     public static final class Employee {
@@ -22,22 +26,31 @@ public final class ApiPaths {
     public static final class SuperAdmin {
         private SuperAdmin(){}
 
-        public static final String SUPER_ADMIN_BASE = BASE_PATH + "/super-admin";
+        public static final String BASE = BASE_PATH + "/super-admin";
 
-        public static final String ONBOARD_MANAGEMENT_TEAM_MEMBER = "/onboard/management-team-member";
+        public static final String ONBOARD_MANAGEMENT_TEAM_MEMBER = ON_BOARD + ManagementTeam.MANAGEMENT_TEAM_MEMBER;
     }
 
     public static final class Auth {
         private Auth() {}
 
         public static final String BASE = BASE_PATH + "/auth";
-
         public static final String LOGIN = "/login";
     }
 
     public static final class ManagementTeam {
         private ManagementTeam(){}
 
-        public static final String BASE = BASE_PATH + "/management-team";
+        public static final String MANAGEMENT_TEAM_MEMBER = "/management-team-member";
+        public static final String BASE = BASE_PATH + MANAGEMENT_TEAM_MEMBER;
+        public static final String ONBOARD_SALES_TEAM_MEMBER = ON_BOARD + SalesTeam.SALES_TEAM_MEMBER;
+        public static final String ONBOARD_STATE_HEAD = ON_BOARD + StateHead.STATE_HEAD;
+    }
+
+    public static final class StateHead {
+        private StateHead() {}
+
+        public static final String STATE_HEAD = "/state-head";
+        public static final String BASE = BASE_PATH + STATE_HEAD;
     }
 }
