@@ -28,7 +28,7 @@ public class StateServiceImpl implements StateService {
     private final UserRepository userRepository;
 
     @Override
-    public StateResponse addState(StateRequest request) {
+    public StateResponse create(StateRequest request) {
         if(stateRepository.existsByName(request.getName())){
             throw new ResourceAlreadyExistException(ExceptionMessage.STATE_ALREADY_ADDED);
         }

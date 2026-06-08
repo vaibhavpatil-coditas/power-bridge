@@ -6,7 +6,7 @@ import com.coditas.powerbridge.dto.response.StateResponse;
 import jakarta.validation.Valid;
 
 public interface StateService {
-    StateResponse addState(@Valid StateRequest request);
+    StateResponse create(@Valid StateRequest request);
 
-    StateResponse assignStateHead(Long id, @Valid StateHeadAssignmentRequest request);
+    StateResponse assignStateHead(Long stateId, @Valid StateHeadAssignmentRequest request);
 }

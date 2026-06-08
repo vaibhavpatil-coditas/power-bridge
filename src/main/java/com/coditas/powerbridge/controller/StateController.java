@@ -3,7 +3,6 @@ package com.coditas.powerbridge.controller;
 import com.coditas.powerbridge.constants.ApiPaths;
 import com.coditas.powerbridge.dto.request.StateHeadAssignmentRequest;
 import com.coditas.powerbridge.dto.request.StateRequest;
-import com.coditas.powerbridge.dto.request.UserRequest;
 import com.coditas.powerbridge.dto.response.ApplicationResponse;
 import com.coditas.powerbridge.dto.response.StateResponse;
 import com.coditas.powerbridge.service.StateService;
@@ -24,8 +23,8 @@ public class StateController {
 
     @PostMapping
     @PreAuthorize("hasRole('SUPER_ADMIN')")
-    public ResponseEntity<ApplicationResponse<StateResponse>> addState(@Valid @RequestBody StateRequest request){
-        StateResponse response = stateService.addState(request);
+    public ResponseEntity<ApplicationResponse<StateResponse>> create(@Valid @RequestBody StateRequest request){
+        StateResponse response = stateService.create(request);
 
         URI location = URI.create(ApiPaths.State.BASE
         +"/"+response.getId());
@@ -39,8 +38,8 @@ public class StateController {
 
     @PutMapping(ApiPaths.ID + ApiPaths.State.HEAD)
     @PreAuthorize("hasRole('MANAGEMENT_TEAM_MEMBER')")
-    public ResponseEntity<ApplicationResponse<StateResponse>> assignStateHead(@PathVariable(required = true) Long id, @Valid @RequestBody StateHeadAssignmentRequest request){
-        StateResponse response = stateService.assignStateHead(id, request);
+    public ResponseEntity<ApplicationResponse<StateResponse>> assignStateHead(@PathVariable(required = true, name = "id") Long stateId, @Valid @RequestBody StateHeadAssignmentRequest request){
+        StateResponse response = stateService.assignStateHead(stateId, request);
 
         return ResponseEntity.ok().body(ApplicationResponse.<StateResponse>builder()
                 .success(true)

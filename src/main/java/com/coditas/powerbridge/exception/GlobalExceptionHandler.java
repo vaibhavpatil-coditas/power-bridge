@@ -18,6 +18,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
     }
 
+    @ExceptionHandler(UnauthorizedStateException.class)
+    public ResponseEntity<ErrorResponse> unauthorizedStateExceptionHandler(UnauthorizedStateException exception){
+        ErrorResponse errorResponse = createErrorResponse(HttpStatus.FORBIDDEN.value(), exception.getMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
+    }
+
     @ExceptionHandler(RoleMismatchedException.class)
     public ResponseEntity<ErrorResponse> roleMismatchedExceptionHandler(RoleMismatchedException exception){
         ErrorResponse errorResponse = createErrorResponse(HttpStatus.UNPROCESSABLE_CONTENT.value(), exception.getMessage());

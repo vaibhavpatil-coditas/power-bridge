@@ -65,4 +65,10 @@ public final class ApiPaths {
         public static final String BASE = BASE_PATH + "/states";
         public static final String HEAD = "/head";
     }
+
+    public static final class District {
+        private District(){}
+
+        public static final String BASE = State.BASE + "/{id}"+ "/districts";
+    }
 }
