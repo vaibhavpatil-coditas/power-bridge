@@ -70,7 +70,7 @@ public class DistrictServiceImpl implements DistrictService {
                 new NotFoundException(ExceptionMessage.USER_NOT_FOUND));
 
         if(!districtHead.getRole().equals(Role.DISTRICT_HEAD)){
-            throw new RoleMismatchedException(ExceptionMessage.ROLE_MISMATCHED_DISTRICT_HEAD);
+            throw new UnauthorizedResourceException(ExceptionMessage.DISTRICT_MISMATCHED);
         }
 
         district.setAssignedAt(Instant.now());

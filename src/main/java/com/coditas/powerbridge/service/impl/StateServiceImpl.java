@@ -9,7 +9,7 @@ import com.coditas.powerbridge.entity.User;
 import com.coditas.powerbridge.enums.Role;
 import com.coditas.powerbridge.exception.NotFoundException;
 import com.coditas.powerbridge.exception.ResourceAlreadyExistException;
-import com.coditas.powerbridge.exception.RoleMismatchedException;
+import com.coditas.powerbridge.exception.UnauthorizedResourceException;
 import com.coditas.powerbridge.mapper.StateMapper;
 import com.coditas.powerbridge.repository.StateRepository;
 import com.coditas.powerbridge.repository.UserRepository;
@@ -47,7 +47,7 @@ public class StateServiceImpl implements StateService {
                 new NotFoundException(ExceptionMessage.USER_NOT_FOUND));
 
         if(!user.getRole().equals(Role.STATE_HEAD)){
-            throw new RoleMismatchedException(ExceptionMessage.ROLE_MISMATCHED_STATE_HEAD);
+            throw new UnauthorizedResourceException(ExceptionMessage.STATE_MISMATCHED);
         }
 
         state.setStateHead(user);

@@ -23,13 +23,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
     }
 
-    @ExceptionHandler(RoleMismatchedException.class)
-    public ResponseEntity<ErrorResponse> roleMismatchedExceptionHandler(RoleMismatchedException exception){
-        ErrorResponse errorResponse = createErrorResponse(HttpStatus.UNPROCESSABLE_CONTENT.value(), exception.getMessage());
-        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_CONTENT).body(errorResponse);
-    }
-
-
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErrorResponse> userNotFoundExceptionHandler(NotFoundException exception){
         ErrorResponse errorResponse = createErrorResponse(HttpStatus.NOT_FOUND.value(), exception.getMessage());

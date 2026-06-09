@@ -39,7 +39,16 @@ public class CityController {
     }
 
     @PutMapping(ApiPaths.City.ID + ApiPaths.City.HEAD)
-    public ResponseEntity<ApplicationResponse<CityResponse>> assignHead(@Valid @RequestBody CityHeadAssignmentRequest request){
-        return null;
+    public ResponseEntity<ApplicationResponse<CityResponse>> assignHead(@PathVariable(name = "district_id") Long districtId,
+            @PathVariable(name = "city_id") Long cityId,
+            @Valid @RequestBody CityHeadAssignmentRequest request){
+
+        CityResponse response = cityService.assignHead(cityId, request);
+
+        return ResponseEntity.ok().body(ApplicationResponse.<CityResponse>builder()
+                .success(true)
+                .message("City head assigned successfully")
+                .data(response)
+                .build());
     }
 }
