@@ -94,4 +94,14 @@ public final class ApiPaths {
 
         public static final String BASE = BASE_PATH + "/city-heads";
     }
+
+    public static final class LocalTechnician {
+        private LocalTechnician(){}
+        public static final String BASE = BASE_PATH + "/cities" + "/{city_id}" + "/local-technicians";
+    }
+
+    public static final class Biller {
+        private Biller(){}
+        public static final String BASE = BASE_PATH + "/cities" + "/{city_id}" + "/biller";
+    }
 }
