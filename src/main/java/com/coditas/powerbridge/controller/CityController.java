@@ -1,6 +1,7 @@
 package com.coditas.powerbridge.controller;
 
 import com.coditas.powerbridge.constants.ApiPaths;
+import com.coditas.powerbridge.dto.request.CityHeadAssignmentRequest;
 import com.coditas.powerbridge.dto.request.CityRequest;
 import com.coditas.powerbridge.dto.response.ApplicationResponse;
 import com.coditas.powerbridge.dto.response.CityResponse;
@@ -35,5 +36,10 @@ public class CityController {
                 .message("City added successfully")
                 .data(response)
                 .build());
+    }
+
+    @PutMapping(ApiPaths.City.ID + ApiPaths.City.HEAD)
+    public ResponseEntity<ApplicationResponse<CityResponse>> assignHead(@Valid @RequestBody CityHeadAssignmentRequest request){
+        return null;
     }
 }

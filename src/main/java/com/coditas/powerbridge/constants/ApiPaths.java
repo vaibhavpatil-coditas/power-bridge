@@ -81,9 +81,17 @@ public final class ApiPaths {
     }
 
     public static final class City {
+
         private City(){}
 
         public static final String ID = "/{city_id}";
         public static final String BASE = BASE_PATH + "/districts" + "/{district_id}" + "/cities";
+        public static final String HEAD = "/head";
+    }
+
+    public static final class CityHead {
+        private CityHead(){}
+
+        public static final String BASE = BASE_PATH + "/city-heads";
     }
 }
