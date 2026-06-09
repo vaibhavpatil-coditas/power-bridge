@@ -6,7 +6,7 @@ import com.coditas.powerbridge.dto.response.DistrictResponse;
 import jakarta.validation.Valid;
 
 public interface DistrictService {
-    DistrictResponse create(Long stateId, @Valid DistrictRequest request);
+    DistrictResponse create(@Valid DistrictRequest request);
 
-    DistrictResponse assignDistrictHead(Long stateId, Long districtId, @Valid DistrictHeadAssignmentRequest request);
+    DistrictResponse assignDistrictHead(Long districtId, @Valid DistrictHeadAssignmentRequest request);
 }

@@ -31,12 +31,12 @@ public class DistrictServiceImpl implements DistrictService {
     private  final UserRepository userRepository;
 
     @Override
-    public DistrictResponse create(Long stateId, DistrictRequest request) {
+    public DistrictResponse create(DistrictRequest request) {
         if(districtRepository.existsByName(request.getName())){
             throw new ResourceAlreadyExistException(ExceptionMessage.DISTRICT_ALREADY_EXIST);
         }
 
-        State state = stateRepository.findById(stateId).orElseThrow(()->
+        State state = stateRepository.findById(request.getStateId()).orElseThrow(()->
                 new NotFoundException(ExceptionMessage.STATE_NOT_FOUND));
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -45,7 +45,7 @@ public class DistrictServiceImpl implements DistrictService {
         }
         User stateHead = (User) authentication.getPrincipal();
         if(stateHead!=null && !stateHead.getId().equals(state.getStateHead().getId())){
-            throw new UnauthorizedStateException(ExceptionMessage.STATE_MISMATCHED);
+            throw new UnauthorizedResourceException(ExceptionMessage.STATE_MISMATCHED);
         }
 
         District district = districtMapper.toDistrict(request);
@@ -56,23 +56,24 @@ public class DistrictServiceImpl implements DistrictService {
     }
 
     @Override
-    public DistrictResponse assignDistrictHead(Long stateId, Long districtId,
+    public DistrictResponse assignDistrictHead(Long districtId,
                                                DistrictHeadAssignmentRequest request) {
 
-        if(!stateRepository.existsById(stateId)){
+        if(!stateRepository.existsById(request.getStateId())){
             throw new NotFoundException(ExceptionMessage.STATE_NOT_FOUND);
         }
 
         District district = districtRepository.findById(districtId).orElseThrow(()->
                 new NotFoundException(ExceptionMessage.DISTRICT_NOT_FOUND));
 
-        User districtHead = userRepository.findById(request.getId()).orElseThrow(()->
+        User districtHead = userRepository.findById(request.getDistrictHeadId()).orElseThrow(()->
                 new NotFoundException(ExceptionMessage.USER_NOT_FOUND));
 
         if(!districtHead.getRole().equals(Role.DISTRICT_HEAD)){
             throw new RoleMismatchedException(ExceptionMessage.ROLE_MISMATCHED_DISTRICT_HEAD);
         }
 
+        district.setAssignedAt(Instant.now());
         district.setDistrictHead(districtHead);
         District savedDistrict = districtRepository.save(district);
         return districtMapper.toDistrictResponse(savedDistrict);

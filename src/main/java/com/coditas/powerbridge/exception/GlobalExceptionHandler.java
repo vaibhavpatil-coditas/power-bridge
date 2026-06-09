@@ -1,7 +1,6 @@
 package com.coditas.powerbridge.exception;
 
 import com.coditas.powerbridge.dto.response.ErrorResponse;
-import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,8 +17,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
     }
 
-    @ExceptionHandler(UnauthorizedStateException.class)
-    public ResponseEntity<ErrorResponse> unauthorizedStateExceptionHandler(UnauthorizedStateException exception){
+    @ExceptionHandler(UnauthorizedResourceException.class)
+    public ResponseEntity<ErrorResponse> unauthorizedStateExceptionHandler(UnauthorizedResourceException exception){
         ErrorResponse errorResponse = createErrorResponse(HttpStatus.FORBIDDEN.value(), exception.getMessage());
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
     }

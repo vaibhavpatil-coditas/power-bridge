@@ -1,0 +1,39 @@
+package com.coditas.powerbridge.controller;
+
+import com.coditas.powerbridge.constants.ApiPaths;
+import com.coditas.powerbridge.dto.request.CityRequest;
+import com.coditas.powerbridge.dto.response.ApplicationResponse;
+import com.coditas.powerbridge.dto.response.CityResponse;
+import com.coditas.powerbridge.service.CityService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+
+@RestController
+@RequestMapping(ApiPaths.City.BASE)
+@RequiredArgsConstructor
+public class CityController {
+
+    private final CityService cityService;
+
+    @PostMapping
+    @PreAuthorize("hasRole('DISTRICT_HEAD')")
+    public ResponseEntity<ApplicationResponse<CityResponse>> create(@PathVariable(name = "district_id") Long districtId,
+            @Valid @RequestBody CityRequest request){
+
+        CityResponse response = cityService.create(districtId, request);
+
+        URI location = URI.create(ApiPaths.City.BASE.replace("{district_id}", districtId.toString())
+        +"/"+response.getId());
+
+        return ResponseEntity.created(location).body(ApplicationResponse.<CityResponse>builder()
+                .success(true)
+                .message("City added successfully")
+                .data(response)
+                .build());
+    }
+}

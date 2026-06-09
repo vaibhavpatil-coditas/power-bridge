@@ -1,16 +1,11 @@
 package com.coditas.powerbridge.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class DistrictRequest {
-    @NotNull
-    @Positive
-    private Long stateId;
+public class CityRequest {
     @NotBlank
     private String name;
 }

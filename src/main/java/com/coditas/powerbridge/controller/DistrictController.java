@@ -23,8 +23,8 @@ public class DistrictController {
 
     @PostMapping
     @PreAuthorize("hasRole('STATE_HEAD')")
-    public ResponseEntity<ApplicationResponse<DistrictResponse>> create(@PathVariable(name = "state_id") Long stateId, @Valid @RequestBody DistrictRequest request){
-        DistrictResponse response = districtService.create(stateId, request);
+    public ResponseEntity<ApplicationResponse<DistrictResponse>> create(@Valid @RequestBody DistrictRequest request){
+        DistrictResponse response = districtService.create(request);
 
         URI location = URI.create(ApiPaths.District.BASE
         +"/"+response.getId());
@@ -38,10 +38,9 @@ public class DistrictController {
 
     @PostMapping(ApiPaths.District.ID+ApiPaths.District.HEAD)
     @PreAuthorize("hasRole('STATE_HEAD')")
-    public ResponseEntity<ApplicationResponse<DistrictResponse>> assignDistrictHead(@PathVariable(required = true, name = "state_id") Long stateId,
-                                                                                    @PathVariable(required = true, name = "district_id") Long districtId,
-                                                                                    @Valid @RequestBody(required = true) DistrictHeadAssignmentRequest request){
-        DistrictResponse response = districtService.assignDistrictHead(stateId, districtId, request);
+    public ResponseEntity<ApplicationResponse<DistrictResponse>> assignDistrictHead(@PathVariable(required = true, name = "district_id") Long districtId,
+                                                                                    @Valid @RequestBody DistrictHeadAssignmentRequest request){
+        DistrictResponse response = districtService.assignDistrictHead(districtId, request);
 
         return ResponseEntity.ok().body(ApplicationResponse.<DistrictResponse>builder()
                         .success(true)

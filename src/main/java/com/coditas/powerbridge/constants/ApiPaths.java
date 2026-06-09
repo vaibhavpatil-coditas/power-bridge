@@ -69,7 +69,7 @@ public final class ApiPaths {
     public static final class District {
         private District(){}
 
-        public static final String BASE = State.BASE + "/{state_id}"+ "/districts";
+        public static final String BASE = BASE_PATH + "/districts";
         public static final String ID = "/{district_id}";
         public static final String HEAD = "/head";
     }
@@ -78,5 +78,12 @@ public final class ApiPaths {
         private DistrictHead(){}
 
         public static final String BASE = BASE_PATH + "/district-heads";
+    }
+
+    public static final class City {
+        private City(){}
+
+        public static final String ID = "/{city_id}";
+        public static final String BASE = BASE_PATH + "/districts" + "/{district_id}" + "/cities";
     }
 }

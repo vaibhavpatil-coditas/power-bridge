@@ -9,5 +9,8 @@ import lombok.Setter;
 public class DistrictHeadAssignmentRequest {
     @NotNull
     @Positive
-    private Long id;
+    private Long districtHeadId;
+    @NotNull
+    @Positive
+    private Long stateId;
 }
