@@ -1,6 +1,7 @@
 package com.coditas.powerbridge.controller;
 
 import com.coditas.powerbridge.constants.ApiPaths;
+import com.coditas.powerbridge.dto.request.DistrictHeadAssignmentRequest;
 import com.coditas.powerbridge.dto.request.DistrictRequest;
 import com.coditas.powerbridge.dto.response.ApplicationResponse;
 import com.coditas.powerbridge.dto.response.DistrictResponse;
@@ -22,7 +23,7 @@ public class DistrictController {
 
     @PostMapping
     @PreAuthorize("hasRole('STATE_HEAD')")
-    public ResponseEntity<ApplicationResponse<DistrictResponse>> create(@PathVariable(name = "id") Long stateId, @Valid @RequestBody DistrictRequest request){
+    public ResponseEntity<ApplicationResponse<DistrictResponse>> create(@PathVariable(name = "state_id") Long stateId, @Valid @RequestBody DistrictRequest request){
         DistrictResponse response = districtService.create(stateId, request);
 
         URI location = URI.create(ApiPaths.District.BASE
@@ -33,5 +34,19 @@ public class DistrictController {
                     .message("District added successfully")
                     .data(response)
                     .build());
+    }
+
+    @PostMapping(ApiPaths.District.ID+ApiPaths.District.HEAD)
+    @PreAuthorize("hasRole('STATE_HEAD')")
+    public ResponseEntity<ApplicationResponse<DistrictResponse>> assignDistrictHead(@PathVariable(required = true, name = "state_id") Long stateId,
+                                                                                    @PathVariable(required = true, name = "district_id") Long districtId,
+                                                                                    @Valid @RequestBody(required = true) DistrictHeadAssignmentRequest request){
+        DistrictResponse response = districtService.assignDistrictHead(stateId, districtId, request);
+
+        return ResponseEntity.ok().body(ApplicationResponse.<DistrictResponse>builder()
+                        .success(true)
+                        .message("District head successfullly assigned")
+                        .data(response)
+                        .build());
     }
 }

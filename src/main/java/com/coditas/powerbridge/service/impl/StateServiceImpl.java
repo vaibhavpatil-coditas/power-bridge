@@ -40,11 +40,16 @@ public class StateServiceImpl implements StateService {
 
     @Override
     public StateResponse assignStateHead(Long stateId, StateHeadAssignmentRequest request) {
-        State state = stateRepository.findById(stateId).orElseThrow(() -> new NotFoundException(ExceptionMessage.STATE_NOT_FOUND));
-        User user = userRepository.findById(request.getId()).orElseThrow(() -> new NotFoundException(ExceptionMessage.USER_NOT_FOUND));
+        State state = stateRepository.findById(stateId).orElseThrow(() ->
+                new NotFoundException(ExceptionMessage.STATE_NOT_FOUND));
+
+        User user = userRepository.findById(request.getId()).orElseThrow(()->
+                new NotFoundException(ExceptionMessage.USER_NOT_FOUND));
+
         if(!user.getRole().equals(Role.STATE_HEAD)){
             throw new RoleMismatchedException(ExceptionMessage.ROLE_MISMATCHED_STATE_HEAD);
         }
+
         state.setStateHead(user);
         State savedState = stateRepository.save(state);
         return stateMapper.toStateResponse(savedState);
