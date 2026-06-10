@@ -109,4 +109,9 @@ public final class ApiPaths {
         private CRM(){}
         public static final String BASE = BASE_PATH + "/cities" + "/{city_id}" + "/crm";
     }
+
+    public static final class Area {
+        private Area(){}
+        public static final String BASE = BASE_PATH + "/cities" + "/{city_id}" + "/areas";
+    }
 }
