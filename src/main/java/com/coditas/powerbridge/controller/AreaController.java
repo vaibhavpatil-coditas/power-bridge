@@ -2,10 +2,10 @@ package com.coditas.powerbridge.controller;
 
 import com.coditas.powerbridge.constants.ApiPaths;
 import com.coditas.powerbridge.dto.request.AreaRequest;
+import com.coditas.powerbridge.dto.request.BillerAssignmentRequest;
 import com.coditas.powerbridge.dto.request.TechnicianAssignmentRequest;
 import com.coditas.powerbridge.dto.response.ApplicationResponse;
 import com.coditas.powerbridge.dto.response.AreaResponse;
-import com.coditas.powerbridge.dto.response.CityResponse;
 import com.coditas.powerbridge.service.AreaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class AreaController {
 
         AreaResponse response = areaService.create(cityId, request);
 
-        URI location = URI.create(ApiPaths.Area.BASE.replace("{city_id}", cityId.toString())
+        URI location = URI.create(ApiPaths.Area.BASE.replace(ApiPaths.City.ID, cityId.toString())
                 +"/"+response.getId());
 
         return ResponseEntity.created(location).body(ApplicationResponse.<AreaResponse>builder()
@@ -39,14 +39,31 @@ public class AreaController {
                 .build());
     }
 
-    @PutMapping(ApiPaths.Area.HEAD)
+    @PutMapping(ApiPaths.Area.TECHNICIAN)
     @PreAuthorize("hasRole('CITY_HEAD')")
     public ResponseEntity<ApplicationResponse<AreaResponse>> assignTechnician(@PathVariable(name = "city_id") Long cityId,
                                                                               @PathVariable(name = "area_id") Long areaId,
                                                                               @Valid @RequestBody TechnicianAssignmentRequest request){
         AreaResponse response = areaService.assignTechnician(cityId, areaId, request);
 
-        URI location = URI.create(ApiPaths.Area.HEAD.replace("{city_id}", cityId.toString()).replace("{area_id}", areaId.toString())
+        URI location = URI.create(ApiPaths.Area.TECHNICIAN.replace(ApiPaths.City.ID, cityId.toString()).replace("{area_id}", areaId.toString())
+                +"/"+response.getId());
+
+        return ResponseEntity.created(location).body(ApplicationResponse.<AreaResponse>builder()
+                .success(true)
+                .message("Technician assigned successfully")
+                .data(response)
+                .build());
+    }
+
+    @PutMapping(ApiPaths.Area.BILLER)
+    @PreAuthorize("hasRole('CITY_HEAD')")
+    public ResponseEntity<ApplicationResponse<AreaResponse>> assignBiller(@PathVariable(name = "city_id") Long cityId,
+                                                                              @PathVariable(name = "area_id") Long areaId,
+                                                                              @Valid @RequestBody BillerAssignmentRequest request){
+        AreaResponse response = areaService.assignBiller(cityId, areaId, request);
+
+        URI location = URI.create(ApiPaths.Area.BILLER.replace(ApiPaths.City.ID, cityId.toString()).replace("{area_id}", areaId.toString())
                 +"/"+response.getId());
 
         return ResponseEntity.created(location).body(ApplicationResponse.<AreaResponse>builder()

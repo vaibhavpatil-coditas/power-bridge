@@ -2,6 +2,7 @@ package com.coditas.powerbridge.service.impl;
 
 import com.coditas.powerbridge.constants.ExceptionMessage;
 import com.coditas.powerbridge.dto.request.AreaRequest;
+import com.coditas.powerbridge.dto.request.BillerAssignmentRequest;
 import com.coditas.powerbridge.dto.request.TechnicianAssignmentRequest;
 import com.coditas.powerbridge.dto.response.AreaResponse;
 import com.coditas.powerbridge.entity.Area;
@@ -68,11 +69,41 @@ public class AreaServiceImpl implements AreaService {
         assert authentication != null;
         User loggedInUser = (User) authentication.getPrincipal();
 
+        assert loggedInUser != null;
         if(!city.getCityHead().getId().equals(loggedInUser.getId())){
             throw new UnauthorizedResourceException(ExceptionMessage.AREA_MISMATCHED);
         }
 
         area.setTechnician(technician);
+        Area savedArea = areaRepository.save(area);
+        return areaMapper.toAreaResponse(savedArea);
+    }
+
+    @Override
+    public AreaResponse assignBiller(Long cityId, Long areaId, BillerAssignmentRequest request) {
+        City city = cityRepository.findById(cityId).orElseThrow(()->
+                new NotFoundException(ExceptionMessage.CITY_NOT_FOUND));
+
+        Area area = areaRepository.findById(areaId).orElseThrow(()->
+                new NotFoundException(ExceptionMessage.CITY_MISMATCHED));
+
+        User biller = userRepository.findById(request.getBillerId()).orElseThrow(()->
+                new NotFoundException(ExceptionMessage.USER_NOT_FOUND));
+
+        if(!biller.getRole().equals(Role.BILLER)){
+            throw new UnauthorizedResourceException(ExceptionMessage.NOT_A_BILLER);
+        }
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        assert authentication != null;
+        User loggedInUser = (User) authentication.getPrincipal();
+
+        assert loggedInUser != null;
+        if(!city.getCityHead().getId().equals(loggedInUser.getId())){
+            throw new UnauthorizedResourceException(ExceptionMessage.AREA_MISMATCHED);
+        }
+
+        area.setBiller(biller);
         Area savedArea = areaRepository.save(area);
         return areaMapper.toAreaResponse(savedArea);
     }
