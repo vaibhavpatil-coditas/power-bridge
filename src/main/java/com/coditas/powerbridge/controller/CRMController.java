@@ -22,7 +22,7 @@ public class CRMController {
 
     @PostMapping
     @PreAuthorize("hasRole('CITY_HEAD')")
-    public ResponseEntity<ApplicationResponse<UserResponse>> create(@PathVariable(name = "city_id") Long cityId,
+    public ResponseEntity<ApplicationResponse<UserResponse>> create(@PathVariable(name = "city-id") Long cityId,
                                                                     @Valid @RequestBody UserRequest request){
 
         UserResponse response = crmService.create(request);

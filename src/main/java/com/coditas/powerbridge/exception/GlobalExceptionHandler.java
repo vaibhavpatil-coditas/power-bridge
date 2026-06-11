@@ -17,6 +17,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
     }
 
+    @ExceptionHandler(UnableToOnboardException.class)
+    public ResponseEntity<ErrorResponse> unableToOnboardExceptionHandler(UnableToOnboardException exception){
+        ErrorResponse errorResponse = createErrorResponse(HttpStatus.BAD_REQUEST.value(), exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
     @ExceptionHandler(UnauthorizedResourceException.class)
     public ResponseEntity<ErrorResponse> unauthorizedStateExceptionHandler(UnauthorizedResourceException exception){
         ErrorResponse errorResponse = createErrorResponse(HttpStatus.FORBIDDEN.value(), exception.getMessage());

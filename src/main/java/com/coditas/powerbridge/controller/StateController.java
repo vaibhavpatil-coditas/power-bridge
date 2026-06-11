@@ -38,7 +38,7 @@ public class StateController {
 
     @PutMapping(ApiPaths.State.ID + ApiPaths.State.HEAD)
     @PreAuthorize("hasRole('MANAGEMENT_TEAM_MEMBER')")
-    public ResponseEntity<ApplicationResponse<StateResponse>> assignStateHead(@PathVariable(required = true, name = "state_id") Long stateId,
+    public ResponseEntity<ApplicationResponse<StateResponse>> assignStateHead(@PathVariable(name = "state-id") Long stateId,
                                                                               @Valid @RequestBody(required = true) StateHeadAssignmentRequest request){
         StateResponse response = stateService.assignStateHead(stateId, request);
 

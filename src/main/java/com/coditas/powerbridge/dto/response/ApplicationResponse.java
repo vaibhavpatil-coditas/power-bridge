@@ -14,5 +14,4 @@ public class ApplicationResponse<T> {
     private String message;
     private T data;
     private Object errors;
-    private Meta meta;
 }

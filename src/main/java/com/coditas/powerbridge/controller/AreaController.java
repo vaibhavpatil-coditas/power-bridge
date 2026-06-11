@@ -24,12 +24,12 @@ public class AreaController {
 
     @PostMapping
     @PreAuthorize("hasRole('CITY_HEAD')")
-    public ResponseEntity<ApplicationResponse<AreaResponse>> create(@PathVariable(name = "city_id") Long cityId,
+    public ResponseEntity<ApplicationResponse<AreaResponse>> create(@PathVariable(name = "city-id") Long cityId,
                                                                     @Valid @RequestBody AreaRequest request){
 
         AreaResponse response = areaService.create(cityId, request);
 
-        URI location = URI.create(ApiPaths.Area.BASE.replace(ApiPaths.City.ID, cityId.toString())
+        URI location = URI.create(ApiPaths.Area.BASE.replace("{city-id}", cityId.toString())
                 +"/"+response.getId());
 
         return ResponseEntity.created(location).body(ApplicationResponse.<AreaResponse>builder()
@@ -41,8 +41,8 @@ public class AreaController {
 
     @PutMapping(ApiPaths.Area.TECHNICIAN)
     @PreAuthorize("hasRole('CITY_HEAD')")
-    public ResponseEntity<ApplicationResponse<AreaResponse>> assignTechnician(@PathVariable(name = "city_id") Long cityId,
-                                                                              @PathVariable(name = "area_id") Long areaId,
+    public ResponseEntity<ApplicationResponse<AreaResponse>> assignTechnician(@PathVariable(name = "city-id") Long cityId,
+                                                                              @PathVariable(name = "area-id") Long areaId,
                                                                               @Valid @RequestBody TechnicianAssignmentRequest request){
         AreaResponse response = areaService.assignTechnician(cityId, areaId, request);
 
@@ -58,12 +58,12 @@ public class AreaController {
 
     @PutMapping(ApiPaths.Area.BILLER)
     @PreAuthorize("hasRole('CITY_HEAD')")
-    public ResponseEntity<ApplicationResponse<AreaResponse>> assignBiller(@PathVariable(name = "city_id") Long cityId,
-                                                                              @PathVariable(name = "area_id") Long areaId,
+    public ResponseEntity<ApplicationResponse<AreaResponse>> assignBiller(@PathVariable(name = "city-id") Long cityId,
+                                                                              @PathVariable(name = "area-id") Long areaId,
                                                                               @Valid @RequestBody BillerAssignmentRequest request){
         AreaResponse response = areaService.assignBiller(cityId, areaId, request);
 
-        URI location = URI.create(ApiPaths.Area.BILLER.replace(ApiPaths.City.ID, cityId.toString()).replace("{area_id}", areaId.toString())
+        URI location = URI.create(ApiPaths.Area.BILLER.replace(ApiPaths.City.ID, cityId.toString()).replace("{area-id}", areaId.toString())
                 +"/"+response.getId());
 
         return ResponseEntity.created(location).body(ApplicationResponse.<AreaResponse>builder()

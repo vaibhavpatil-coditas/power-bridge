@@ -1,11 +1,13 @@
 package com.coditas.powerbridge.tenant;
 
+import com.coditas.powerbridge.exception.UnableToOnboardException;
 import lombok.RequiredArgsConstructor;
 import org.flywaydb.core.Flyway;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.Statement;
 
 @Service
 @RequiredArgsConstructor
@@ -15,10 +17,11 @@ public class TenantMigrationService {
 
     public void onboardTenant(String tenantId) {
         try(Connection connection = dataSource.getConnection()){
-            connection.createStatement()
-                    .execute("CREATE SCHEMA IF NOT EXISTS " + tenantId);
+            Statement statement = connection.createStatement();
+            statement.execute("CREATE SCHEMA IF NOT EXISTS " + tenantId);
+            statement.close();
         }catch (Exception exception){
-            throw new RuntimeException("Unable to onboard");
+            throw new UnableToOnboardException("Unable to onboard");
         }
 
         Flyway flyway = Flyway.configure()

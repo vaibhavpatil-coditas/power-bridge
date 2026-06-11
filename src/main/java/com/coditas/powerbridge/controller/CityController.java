@@ -23,7 +23,7 @@ public class CityController {
 
     @PostMapping
     @PreAuthorize("hasRole('DISTRICT_HEAD')")
-    public ResponseEntity<ApplicationResponse<CityResponse>> create(@PathVariable(name = "district_id") Long districtId,
+    public ResponseEntity<ApplicationResponse<CityResponse>> create(@PathVariable(name = "district-id") Long districtId,
             @Valid @RequestBody CityRequest request){
 
         CityResponse response = cityService.create(districtId, request);
@@ -39,8 +39,8 @@ public class CityController {
     }
 
     @PutMapping(ApiPaths.City.ID + ApiPaths.City.HEAD)
-    public ResponseEntity<ApplicationResponse<CityResponse>> assignHead(@PathVariable(name = "district_id") Long districtId,
-            @PathVariable(name = "city_id") Long cityId,
+    public ResponseEntity<ApplicationResponse<CityResponse>> assignHead(@PathVariable(name = "district-id") Long districtId,
+            @PathVariable(name = "city-id") Long cityId,
             @Valid @RequestBody CityHeadAssignmentRequest request){
 
         CityResponse response = cityService.assignHead(cityId, request);

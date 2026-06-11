@@ -1,6 +1,5 @@
 package com.coditas.powerbridge.config;
 
-import com.coditas.powerbridge.enums.Role;
 import com.coditas.powerbridge.security.jwt.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

@@ -30,7 +30,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskResponse assignTaskToSalesTeamMember(TaskRequest taskRequest) {
-        if(taskRepository.existsByTask(taskRequest.getTask())){
+        if(taskRepository.existsByAssignedTask(taskRequest.getTask())){
             throw new ResourceAlreadyExistException(ExceptionMessage.TASK_ALREADY_ASSIGNED);
         }
         Task task = taskMapper.toTask(taskRequest);

@@ -5,5 +5,5 @@ import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
-    boolean existsByTask(@NotBlank String task);
+    boolean existsByAssignedTask(@NotBlank String task);
 }

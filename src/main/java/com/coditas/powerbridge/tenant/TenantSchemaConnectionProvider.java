@@ -2,12 +2,12 @@ package com.coditas.powerbridge.tenant;
 
 import lombok.RequiredArgsConstructor;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 @Component
 @RequiredArgsConstructor
@@ -28,16 +28,18 @@ public class TenantSchemaConnectionProvider implements MultiTenantConnectionProv
     @Override
     public Connection getConnection(String tenantId) throws SQLException {
         Connection connection = dataSource.getConnection();
-        connection.createStatement()
-                .execute("SET search_path TO " + tenantId);
+        try(Statement statement = connection.createStatement()){
+            statement.execute("SET search_path TO " + tenantId);
+        }
         return connection;
     }
 
     @Override
     public void releaseConnection(String tenantId, Connection connection) throws SQLException {
-        connection.createStatement()
-                .execute("SET search_path TO public");
-        connection.close();
+        try(Statement statement = connection.createStatement()) {
+                statement.execute("SET search_path TO public");
+        }
+            connection.close();
     }
 
     @Override

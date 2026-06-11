@@ -22,12 +22,12 @@ public class BillerController {
 
     @PostMapping
     @PreAuthorize("hasRole('CITY_HEAD')")
-    public ResponseEntity<ApplicationResponse<UserResponse>> create(@PathVariable(name = "city_id") Long cityId,
+    public ResponseEntity<ApplicationResponse<UserResponse>> create(@PathVariable(name = "city-id") Long cityId,
                                                                     @Valid @RequestBody UserRequest userRequest){
 
         UserResponse response = billerService.create(userRequest);
 
-        URI location = URI.create(ApiPaths.Biller.BASE.replace("{city_id}", cityId.toString())
+        URI location = URI.create(ApiPaths.Biller.BASE.replace("{city-id}", cityId.toString())
                 +"/"+cityId);
 
         return ResponseEntity.created(location).body(ApplicationResponse.<UserResponse>builder()

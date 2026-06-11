@@ -55,7 +55,8 @@ public final class ApiPaths {
     public static final class Task {
         private Task(){}
 
-        public static final String BASE = BASE_PATH + "/tasks";
+        public static final String TASKS = "/tasks";
+        public static final String BASE = BASE_PATH + TASKS;
     }
 
     public static final class State {
@@ -63,14 +64,14 @@ public final class ApiPaths {
 
         public static final String BASE = BASE_PATH + "/states";
         public static final String HEAD = "/head";
-        public static final String ID = "/state_id";
+        public static final String ID = "/{state-id}";
     }
 
     public static final class District {
         private District(){}
 
         public static final String BASE = BASE_PATH + "/districts";
-        public static final String ID = "/{district_id}";
+        public static final String ID = "/{district-id}";
         public static final String HEAD = "/head";
     }
 
@@ -82,11 +83,13 @@ public final class ApiPaths {
 
     public static final class City {
 
+
         private City(){}
 
-        public static final String ID = "/{city_id}";
-        public static final String BASE = BASE_PATH + "/districts" + "/{district_id}" + "/cities";
+        public static final String ID = "/{city-id}";
+        public static final String BASE = BASE_PATH + "/districts" + "/{district-id}" + "/cities";
         public static final String HEAD = "/head";
+        public static final String CITIES = "/cities";
     }
 
     public static final class CityHead {
@@ -97,24 +100,25 @@ public final class ApiPaths {
 
     public static final class LocalTechnician {
         private LocalTechnician(){}
-        public static final String BASE = BASE_PATH + "/cities" + "/{city_id}" + "/local-technicians";
+        public static final String BASE = BASE_PATH + City.CITIES + City.ID + "/local-technicians";
     }
 
     public static final class Biller {
         private Biller(){}
-        public static final String BASE = BASE_PATH + "/cities" + "/{city_id}" + "/biller";
+        public static final String BASE = BASE_PATH + City.CITIES + City.ID + "/biller";
     }
 
     public static final class CRM {
         private CRM(){}
-        public static final String BASE = BASE_PATH + "/cities" + "/{city_id}" + "/crm";
+        public static final String BASE = BASE_PATH + City.CITIES + City.ID + "/crm";
     }
 
     public static final class Area {
 
         private Area(){}
-        public static final String BASE = BASE_PATH + "/cities" + "/{city_id}" + "/areas";
-        public static final String TECHNICIAN = "/{area_id}" + "/technician";
-        public static final String BILLER = "/{area_id}" + "/biller";
+        public static final String BASE = BASE_PATH + City.CITIES + City.ID + "/areas";
+        private static final String ID = "/{area-id}";
+        public static final String TECHNICIAN = ID + "/technician";
+        public static final String BILLER = ID + "/biller";
     }
 }

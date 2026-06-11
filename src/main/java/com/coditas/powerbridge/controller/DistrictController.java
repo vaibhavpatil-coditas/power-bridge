@@ -38,7 +38,7 @@ public class DistrictController {
 
     @PostMapping(ApiPaths.District.ID+ApiPaths.District.HEAD)
     @PreAuthorize("hasRole('STATE_HEAD')")
-    public ResponseEntity<ApplicationResponse<DistrictResponse>> assignDistrictHead(@PathVariable(required = true, name = "district_id") Long districtId,
+    public ResponseEntity<ApplicationResponse<DistrictResponse>> assignDistrictHead(@PathVariable(required = true, name = "district-id") Long districtId,
                                                                                     @Valid @RequestBody DistrictHeadAssignmentRequest request){
         DistrictResponse response = districtService.assignDistrictHead(districtId, request);
 
