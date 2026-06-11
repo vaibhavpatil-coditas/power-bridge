@@ -114,11 +114,15 @@ public final class ApiPaths {
     }
 
     public static final class Area {
-
         private Area(){}
         public static final String BASE = BASE_PATH + City.CITIES + City.ID + "/areas";
         private static final String ID = "/{area-id}";
         public static final String TECHNICIAN = ID + "/technician";
         public static final String BILLER = ID + "/biller";
+    }
+
+    public static final class Customer {
+        private Customer(){}
+        public static final String BASE = BASE_PATH + "/customers";
     }
 }

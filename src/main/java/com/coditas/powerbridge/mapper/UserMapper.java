@@ -11,4 +11,6 @@ public interface UserMapper {
     User toUser(UserRequest user);
 
     UserResponse toUserResponse(User savedUser);
+
+    User userResponseToUser(UserResponse userResponse);
 }
