@@ -3,16 +3,21 @@ package com.coditas.powerbridge.service.impl;
 import com.coditas.powerbridge.common.UserPersistenceService;
 import com.coditas.powerbridge.constants.ExceptionMessage;
 import com.coditas.powerbridge.dto.request.CustomerRequest;
+import com.coditas.powerbridge.dto.request.UserServiceProviderRequest;
 import com.coditas.powerbridge.dto.response.CustomerResponse;
 import com.coditas.powerbridge.dto.response.UserResponse;
+import com.coditas.powerbridge.dto.response.UserServiceProviderReponse;
 import com.coditas.powerbridge.entity.Area;
 import com.coditas.powerbridge.entity.Customer;
+import com.coditas.powerbridge.entity.UserServiceProvider;
 import com.coditas.powerbridge.enums.Role;
 import com.coditas.powerbridge.exception.NotFoundException;
 import com.coditas.powerbridge.mapper.CustomerMapper;
 import com.coditas.powerbridge.mapper.UserMapper;
+import com.coditas.powerbridge.mapper.UserServiceProviderMapper;
 import com.coditas.powerbridge.repository.AreaRepository;
 import com.coditas.powerbridge.repository.CustomerRepository;
+import com.coditas.powerbridge.repository.UserServiceProviderRepository;
 import com.coditas.powerbridge.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,6 +32,8 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
     private final AreaRepository areaRepository;
     private final UserMapper userMapper;
+    private final UserServiceProviderMapper userServiceProviderMapper;
+    private final UserServiceProviderRepository userServiceProviderRepository;
 
     @Override
     @Transactional
@@ -41,5 +48,12 @@ public class CustomerServiceImpl implements CustomerService {
         CustomerResponse customerResponse = customerMapper.toCustomerResponse(savedCustomer);
         customerResponse.setUser(userResponse);
         return customerResponse;
+    }
+
+    @Override
+    public UserServiceProviderReponse assignServiceProvider(UserServiceProviderRequest request) {
+        UserServiceProvider userServiceProvider = userServiceProviderMapper.toUserServiceProvider(request);
+        UserServiceProvider savedUserServiceProvider = userServiceProviderRepository.save(userServiceProvider);
+        return userServiceProviderMapper.toUserServiceProviderReponse(savedUserServiceProvider);
     }
 }

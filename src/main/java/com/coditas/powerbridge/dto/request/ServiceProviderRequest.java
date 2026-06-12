@@ -1,11 +1,11 @@
 package com.coditas.powerbridge.dto.request;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
 public class ServiceProviderRequest {
-    @NotNull
-    private UserRequest user;
+    @NotBlank
+    private String name;
 }

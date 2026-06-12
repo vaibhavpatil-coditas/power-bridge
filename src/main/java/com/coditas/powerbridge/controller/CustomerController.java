@@ -2,8 +2,10 @@ package com.coditas.powerbridge.controller;
 
 import com.coditas.powerbridge.constants.ApiPaths;
 import com.coditas.powerbridge.dto.request.CustomerRequest;
+import com.coditas.powerbridge.dto.request.UserServiceProviderRequest;
 import com.coditas.powerbridge.dto.response.ApplicationResponse;
 import com.coditas.powerbridge.dto.response.CustomerResponse;
+import com.coditas.powerbridge.dto.response.UserServiceProviderReponse;
 import com.coditas.powerbridge.service.CustomerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +36,19 @@ public class CustomerController {
         return ResponseEntity.created(location).body(ApplicationResponse.<CustomerResponse>builder()
                 .success(true)
                 .message("Customer created successfully")
+                .data(response)
+                .build());
+    }
+
+    @PreAuthorize("hasRole('CRM')")
+    @PostMapping(ApiPaths.Customer.ASSIGN_SERVICE_PROVIDER)
+    public ResponseEntity<ApplicationResponse<UserServiceProviderReponse>> assignServiceProvider(@Valid @RequestBody UserServiceProviderRequest request){
+
+        UserServiceProviderReponse response = customerService.assignServiceProvider(request);
+
+        return ResponseEntity.ok().body(ApplicationResponse.<UserServiceProviderReponse>builder()
+                .success(true)
+                .message("Service provider assigned successfully")
                 .data(response)
                 .build());
     }

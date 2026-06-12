@@ -1,0 +1,7 @@
+package com.coditas.powerbridge.repository;
+
+import com.coditas.powerbridge.entity.ServiceProvider;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ServiceProviderRepository extends JpaRepository<ServiceProvider, Long> {
+}
