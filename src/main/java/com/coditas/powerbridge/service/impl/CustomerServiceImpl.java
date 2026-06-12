@@ -10,10 +10,12 @@ import com.coditas.powerbridge.dto.response.UserServiceProviderReponse;
 import com.coditas.powerbridge.entity.Area;
 import com.coditas.powerbridge.entity.Customer;
 import com.coditas.powerbridge.entity.UserServiceProvider;
+import com.coditas.powerbridge.entity.UserServiceProviderId;
 import com.coditas.powerbridge.enums.Role;
 import com.coditas.powerbridge.exception.NotFoundException;
 import com.coditas.powerbridge.mapper.CustomerMapper;
 import com.coditas.powerbridge.mapper.UserMapper;
+import com.coditas.powerbridge.mapper.UserServiceProviderIdMapper;
 import com.coditas.powerbridge.mapper.UserServiceProviderMapper;
 import com.coditas.powerbridge.repository.AreaRepository;
 import com.coditas.powerbridge.repository.CustomerRepository;
@@ -34,6 +36,7 @@ public class CustomerServiceImpl implements CustomerService {
     private final UserMapper userMapper;
     private final UserServiceProviderMapper userServiceProviderMapper;
     private final UserServiceProviderRepository userServiceProviderRepository;
+    private final UserServiceProviderIdMapper userServiceProviderIdMapper;
 
     @Override
     @Transactional
@@ -52,7 +55,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public UserServiceProviderReponse assignServiceProvider(UserServiceProviderRequest request) {
+        UserServiceProviderId userServiceProviderId = userServiceProviderIdMapper.toUserServiceProviderId(request);
         UserServiceProvider userServiceProvider = userServiceProviderMapper.toUserServiceProvider(request);
+        userServiceProvider.setId(userServiceProviderId);
         UserServiceProvider savedUserServiceProvider = userServiceProviderRepository.save(userServiceProvider);
         return userServiceProviderMapper.toUserServiceProviderReponse(savedUserServiceProvider);
     }
