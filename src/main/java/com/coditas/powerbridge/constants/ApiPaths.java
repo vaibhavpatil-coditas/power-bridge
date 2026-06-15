@@ -123,8 +123,14 @@ public final class ApiPaths {
 
     public static final class Customer {
         private Customer(){}
-        public static final String BASE = BASE_PATH + "/customers";
+        public static final String CUSTOMERS = "/customers";
+        public static final String BASE = BASE_PATH + CUSTOMERS;
         public static final String ASSIGN_SERVICE_PROVIDER = "/assign-service-provider";
         public static final String ID = "/{customer-id}";
+    }
+
+    public static final class ElectricityBill {
+        private ElectricityBill(){}
+        public static final String ELECTRICITY_BILL = "/electricity-bills";
     }
 }
