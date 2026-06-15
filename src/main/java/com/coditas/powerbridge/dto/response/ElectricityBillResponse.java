@@ -1,6 +1,7 @@
 package com.coditas.powerbridge.dto.response;
 
 import com.coditas.powerbridge.entity.Customer;
+import com.coditas.powerbridge.enums.BillStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,4 +14,5 @@ public class ElectricityBillResponse {
     private double amount;
     private Instant generatedAt;
     private Instant dueDate;
+    private BillStatus status;
 }

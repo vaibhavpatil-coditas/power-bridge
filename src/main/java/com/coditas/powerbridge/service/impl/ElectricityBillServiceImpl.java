@@ -5,6 +5,7 @@ import com.coditas.powerbridge.dto.request.ElectricityBillRequest;
 import com.coditas.powerbridge.dto.response.ElectricityBillResponse;
 import com.coditas.powerbridge.entity.Customer;
 import com.coditas.powerbridge.entity.ElectricityBill;
+import com.coditas.powerbridge.enums.BillStatus;
 import com.coditas.powerbridge.exception.NotFoundException;
 import com.coditas.powerbridge.mapper.ElectricityBillMapper;
 import com.coditas.powerbridge.repository.CustomerRepository;
@@ -29,6 +30,7 @@ public class ElectricityBillServiceImpl implements ElectricityBillService {
                 new NotFoundException(ExceptionMessage.USER_NOT_FOUND));
 
         ElectricityBill electricityBill = electricityBillMapper.toElectricityBill(request);
+        electricityBill.setStatus(BillStatus.PENDING);
         electricityBill.setCustomer(customer);
         electricityBill.setGeneratedAt(Instant.now());
         ElectricityBill savedElectricityBill = electricityBillRepository.save(electricityBill);

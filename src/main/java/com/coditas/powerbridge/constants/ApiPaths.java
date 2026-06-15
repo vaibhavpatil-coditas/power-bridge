@@ -77,24 +77,19 @@ public final class ApiPaths {
 
     public static final class DistrictHead {
         private DistrictHead(){}
-
         public static final String BASE = BASE_PATH + "/district-heads";
     }
 
     public static final class City {
-
-
         private City(){}
-
         public static final String ID = "/{city-id}";
-        public static final String BASE = BASE_PATH + "/districts" + "/{district-id}" + "/cities";
+        public static final String BASE = BASE_PATH + "/districts" + District.ID + "/cities";
         public static final String HEAD = "/head";
         public static final String CITIES = "/cities";
     }
 
     public static final class CityHead {
         private CityHead(){}
-
         public static final String BASE = BASE_PATH + "/city-heads";
     }
 
@@ -116,7 +111,7 @@ public final class ApiPaths {
     public static final class Area {
         private Area(){}
         public static final String BASE = BASE_PATH + City.CITIES + City.ID + "/areas";
-        private static final String ID = "/{area-id}";
+        public static final String ID = "/{area-id}";
         public static final String TECHNICIAN = ID + "/technician";
         public static final String BILLER = ID + "/biller";
     }
@@ -132,5 +127,10 @@ public final class ApiPaths {
     public static final class ElectricityBill {
         private ElectricityBill(){}
         public static final String ELECTRICITY_BILL = "/electricity-bills";
+    }
+
+    public static final class BillerQuery {
+        private BillerQuery(){}
+        public static final String BILLER_QUERY = "/biller-queries";
     }
 }
