@@ -1,6 +1,7 @@
 CREATE TYPE user_role AS ENUM(
+    'SERVICE_PROVIDER',
     'BPO',
-    'SALES_TEAM',
+    'SALES_TEAM_MEMBER',
     'OPERATIONAL_HEAD',
     'MANAGER_1',
     'MANAGER_2'

@@ -13,5 +13,4 @@ public class ServiceUtil {
     public String encodePassword(User user) {
         return passwordEncoder.encode(user.getPassword());
     }
-
 }

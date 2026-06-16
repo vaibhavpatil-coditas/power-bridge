@@ -13,7 +13,7 @@ import java.sql.Statement;
 @RequiredArgsConstructor
 public class TenantSchemaConnectionProvider implements MultiTenantConnectionProvider<String> {
 
-    private final DataSource dataSource;
+    private final transient DataSource dataSource;
 
     @Override
     public Connection getAnyConnection() throws SQLException {

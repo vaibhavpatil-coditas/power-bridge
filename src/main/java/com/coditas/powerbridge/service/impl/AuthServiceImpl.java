@@ -33,7 +33,7 @@ public class AuthServiceImpl implements AuthService {
         }catch (UsernameNotFoundException e){
             throw new UserNotAuthenticatedException(ExceptionMessage.USER_NOT_FOUND);
         }catch (BadCredentialsException be){
-            throw new UserNotAuthenticatedException(ExceptionMessage.USER_NOT_AUTHENTICATED);
+            throw new UserNotAuthenticatedException(ExceptionMessage.USERNAME_OR_PASSWORD_MISMATCHED);
         }
         UserDetails user = (UserDetails) authenticate.getPrincipal();
         if(user==null){

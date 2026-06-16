@@ -3,18 +3,22 @@ package com.coditas.powerbridge.service.impl;
 import com.coditas.powerbridge.constants.ExceptionMessage;
 import com.coditas.powerbridge.dto.request.ServiceProviderRequest;
 import com.coditas.powerbridge.dto.response.ServiceProviderResponse;
+import com.coditas.powerbridge.entity.Employee;
 import com.coditas.powerbridge.entity.ServiceProvider;
 import com.coditas.powerbridge.entity.User;
+import com.coditas.powerbridge.enums.Role;
 import com.coditas.powerbridge.exception.ResourceAlreadyExistException;
+import com.coditas.powerbridge.mapper.EmployeeMapper;
 import com.coditas.powerbridge.mapper.ServiceProviderMapper;
+import com.coditas.powerbridge.repository.EmployeeRepository;
 import com.coditas.powerbridge.repository.ServiceProviderRepository;
-import com.coditas.powerbridge.repository.UserRepository;
 import com.coditas.powerbridge.service.ServiceProviderService;
 import com.coditas.powerbridge.tenant.TenantContext;
 import com.coditas.powerbridge.tenant.TenantMigrationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +31,9 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
     private final TenantMigrationService tenantMigrationService;
     private final ServiceProviderMapper serviceProviderMapper;
     private final ServiceProviderRepository serviceProviderRepository;
-    private final UserRepository userRepository;
+    private final EmployeeMapper employeeMapper;
+    private final EmployeeRepository employeeRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -42,9 +48,15 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
         assert authentication != null;
         User onBoardingMember = (User) authentication.getPrincipal();
 
+        Employee employee = employeeMapper.toEmployee(request.getOwner());
+        employee.setRole(Role.SERVICE_PROVIDER);
+        employee.setPassword(passwordEncoder.encode(request.getOwner().getPassword()));
+        employee.setCreatedAt(Instant.now());
+
         serviceProvider.setUser(onBoardingMember);
         serviceProvider.setCreatedAt(Instant.now());
         tenantMigrationService.onboardTenant(TenantContext.getCurrentTenant());
+        employeeRepository.save(employee);
         ServiceProvider savedServiceProvider = serviceProviderRepository.save(serviceProvider);
         return serviceProviderMapper.toServiceProviderResponse(savedServiceProvider);
     }

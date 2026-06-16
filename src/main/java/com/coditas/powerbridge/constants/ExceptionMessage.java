@@ -23,4 +23,5 @@ public final class ExceptionMessage {
     public static final String NOT_A_LOCAL_TECHNICIAN = "Provided user is not a technician";
     public static final String NOT_A_BILLER = "Provided user is not a biller";
     public static final String USER_NOT_AUTHENTICATED = "User is not authenticated";
+    public static final String USERNAME_OR_PASSWORD_MISMATCHED = "Username or password is wrong";
 }

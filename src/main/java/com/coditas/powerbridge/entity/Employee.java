@@ -1,19 +1,49 @@
 package com.coditas.powerbridge.entity;
 
+import com.coditas.powerbridge.enums.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.time.Instant;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "employees")
 @Getter @Setter
-public class Employee {
+public class Employee implements UserDetails {
     @Id
-    @Column(name = "user_id")
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @MapsId
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    private String name;
+
+    @Column(unique = true)
+    private String email;
+
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    @Column(columnDefinition = "user_role")
+    private Role role;
+
+    @Column(name = "created_at")
+    private Instant createdAt;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_"+role.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
 }
