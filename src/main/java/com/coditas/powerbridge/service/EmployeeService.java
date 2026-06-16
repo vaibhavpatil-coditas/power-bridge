@@ -6,4 +6,6 @@ import jakarta.validation.Valid;
 
 public interface EmployeeService {
     EmployeeResponse onboardSalesTeamMember(@Valid EmployeeRequest request);
+
+    EmployeeResponse onboardOperationsHead(@Valid EmployeeRequest request);
 }

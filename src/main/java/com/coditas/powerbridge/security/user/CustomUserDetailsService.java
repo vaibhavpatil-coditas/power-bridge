@@ -23,6 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String identity) throws UsernameNotFoundException {
         String currentTenant = TenantContext.getCurrentTenant();
         UserDetails user = null;
+
         if(currentTenant==null || currentTenant.equals("public")){
             user = userRepository.findByUsername(identity);
             if(user == null)

@@ -23,8 +23,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeResponse onboardSalesTeamMember(EmployeeRequest request) {
+        return persistEmployee(request, Role.SALES_TEAM_MEMBER);
+    }
+
+    @Override
+    public EmployeeResponse onboardOperationsHead(EmployeeRequest request) {
+        return persistEmployee(request, Role.OPERATIONS_HEAD);
+    }
+
+    private EmployeeResponse persistEmployee(EmployeeRequest request, Role role) {
         Employee employee = employeeMapper.toEmployee(request);
-        employee.setRole(Role.SALES_TEAM_MEMBER);
+        employee.setRole(role);
         employee.setPassword(passwordEncoder.encode(request.getPassword()));
         employee.setCreatedAt(Instant.now());
         Employee savedEmployee = employeeRepository.save(employee);
