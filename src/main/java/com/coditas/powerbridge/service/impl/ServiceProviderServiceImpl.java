@@ -1,9 +1,11 @@
 package com.coditas.powerbridge.service.impl;
 
+import com.coditas.powerbridge.constants.ExceptionMessage;
 import com.coditas.powerbridge.dto.request.ServiceProviderRequest;
 import com.coditas.powerbridge.dto.response.ServiceProviderResponse;
 import com.coditas.powerbridge.entity.ServiceProvider;
 import com.coditas.powerbridge.entity.User;
+import com.coditas.powerbridge.exception.ResourceAlreadyExistException;
 import com.coditas.powerbridge.mapper.ServiceProviderMapper;
 import com.coditas.powerbridge.repository.ServiceProviderRepository;
 import com.coditas.powerbridge.repository.UserRepository;
@@ -31,6 +33,10 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
     @Transactional
     public ServiceProviderResponse onboard(ServiceProviderRequest request) {
         ServiceProvider serviceProvider = serviceProviderMapper.toServiceProvider(request);
+
+        if(serviceProviderRepository.existsByName(request.getName())){
+            throw new ResourceAlreadyExistException(ExceptionMessage.SERVICE_PROVIDER_ALREADY_EXIST);
+        }
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         assert authentication != null;

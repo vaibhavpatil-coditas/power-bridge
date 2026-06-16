@@ -11,13 +11,13 @@ public class ServiceProviderState {
     @EmbeddedId
     private ServiceProviderStateId id;
 
-    @ManyToOne
     @MapsId("serviceProviderId")
+    @ManyToOne
     @JoinColumn(name = "service_provider_id")
     private ServiceProvider serviceProvider;
 
-    @ManyToOne
     @MapsId("stateId")
+    @ManyToOne
     @JoinColumn(name = "state_id")
     private State state;
 }
