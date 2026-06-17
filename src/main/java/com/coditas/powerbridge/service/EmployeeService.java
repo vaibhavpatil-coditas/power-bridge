@@ -8,4 +8,6 @@ public interface EmployeeService {
     EmployeeResponse onboardSalesTeamMember(@Valid EmployeeRequest request);
 
     EmployeeResponse onboardOperationsHead(@Valid EmployeeRequest request);
+
+    EmployeeResponse onboardBPO(@Valid EmployeeRequest request);
 }

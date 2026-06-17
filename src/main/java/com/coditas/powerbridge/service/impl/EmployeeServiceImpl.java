@@ -31,6 +31,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         return persistEmployee(request, Role.OPERATIONS_HEAD);
     }
 
+    @Override
+    public EmployeeResponse onboardBPO(EmployeeRequest request) {
+        return persistEmployee(request, Role.BPO);
+    }
+
     private EmployeeResponse persistEmployee(EmployeeRequest request, Role role) {
         Employee employee = employeeMapper.toEmployee(request);
         employee.setRole(role);
