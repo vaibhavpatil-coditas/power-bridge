@@ -1,5 +1,6 @@
 package com.coditas.powerbridge.service.impl;
 
+import com.coditas.powerbridge.common.TenantSwitchUtil;
 import com.coditas.powerbridge.constants.ExceptionMessage;
 import com.coditas.powerbridge.dto.request.ServiceProviderRequest;
 import com.coditas.powerbridge.dto.response.ServiceProviderResponse;
@@ -15,6 +16,7 @@ import com.coditas.powerbridge.repository.ServiceProviderRepository;
 import com.coditas.powerbridge.service.ServiceProviderService;
 import com.coditas.powerbridge.tenant.TenantContext;
 import com.coditas.powerbridge.tenant.TenantMigrationService;
+import com.coditas.powerbridge.tenant.TenantSchemaConnectionProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,6 +36,8 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
     private final EmployeeMapper employeeMapper;
     private final EmployeeRepository employeeRepository;
     private final PasswordEncoder passwordEncoder;
+    private final TenantSchemaConnectionProvider tenantSchemaConnectionProvider;
+    private final TenantSwitchUtil tenantSwitchUtil;
 
     @Override
     @Transactional
@@ -55,9 +59,13 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
 
         serviceProvider.setUser(onBoardingMember);
         serviceProvider.setCreatedAt(Instant.now());
-        tenantMigrationService.onboardTenant(TenantContext.getCurrentTenant());
-        employeeRepository.save(employee);
+
+        String emailDomain = request.getOwner().getEmail().split("@")[1].split("\\.")[0];
+
+        tenantMigrationService.onboardTenant(emailDomain);
         ServiceProvider savedServiceProvider = serviceProviderRepository.save(serviceProvider);
+        TenantContext.setCurrentTenant(emailDomain);
+        tenantSwitchUtil.saveEmployee(employee);
         return serviceProviderMapper.toServiceProviderResponse(savedServiceProvider);
     }
 }
