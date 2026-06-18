@@ -7,7 +7,7 @@ import lombok.Setter;
 import java.time.Instant;
 
 @Entity
-@Table(name = "districts")
+@Table(name = "districts", schema = "public")
 @Getter @Setter
 public class District {
     @Id

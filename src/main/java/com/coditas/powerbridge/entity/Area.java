@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "areas")
+@Table(name = "areas", schema = "public")
 @Getter @Setter
 public class Area {
     @Id

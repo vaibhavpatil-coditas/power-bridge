@@ -23,3 +23,10 @@ CREATE TABLE bpo_states(
     CONSTRAINT  fk_bpo_id FOREIGN KEY (bpo_id) REFERENCES employees(id),
     CONSTRAINT  fk_state_id FOREIGN KEY (state_id) REFERENCES public.states(id)
 );
+
+CREATE TABLE reliance.customer_queries(
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    query VARCHAR(255) NOT NULL,
+    customer_id BIGINT NOT NULL,
+    CONSTRAINT fk_customer FOREIGN KEY (customer_id) REFERENCES public.customers(id)
+);
