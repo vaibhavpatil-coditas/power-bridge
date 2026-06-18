@@ -10,7 +10,6 @@ import com.coditas.powerbridge.mapper.CustomerQueryMapper;
 import com.coditas.powerbridge.repository.EmployeeRepository;
 import com.coditas.powerbridge.service.impl.CustomerQueryRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;

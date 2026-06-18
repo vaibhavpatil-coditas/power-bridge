@@ -126,11 +126,13 @@ public final class ApiPaths {
     }
 
     public static final class Employee {
+
         private Employee() {}
         public static final String BASE = BASE_PATH + "/employees";
         public static final String SALES_TEAM = "/sales-team";
         public static final String OPERATIONS_HEAD = "/operations-head";
         public static final String BPO = "/bpo";
         public static final String BPO_ID = "/{bpo-id}";
+        public static final String MANAGER1 = "/manager-1";
     }
 }

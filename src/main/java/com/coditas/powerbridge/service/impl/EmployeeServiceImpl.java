@@ -50,6 +50,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public EmployeeResponse onboardManager1(EmployeeRequest request) {
+        return persistEmployee(request, Role.MANAGER1);
+    }
+
+    @Override
     public BPOStateResponse assignStateToBPO(Long bpoId, BPOStateRequest request) {
         Employee bpo = employeeRepository.findById(bpoId).orElseThrow(()->
                 new NotFoundException(ExceptionMessage.EMPLOYEE_NOT_FOUND));
@@ -66,6 +71,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         BPOState savedBpoState = bpoStateRepository.save(bpoState);
         return bpoStateMapper.toBPOStateResponse(savedBpoState);
     }
+
 
     private EmployeeResponse persistEmployee(EmployeeRequest request, Role role) {
         Employee employee = employeeMapper.toEmployee(request);

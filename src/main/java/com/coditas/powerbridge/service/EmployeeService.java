@@ -14,4 +14,6 @@ public interface EmployeeService {
     EmployeeResponse onboardBPO(@Valid EmployeeRequest request);
 
     BPOStateResponse assignStateToBPO(Long bpoId, @Valid BPOStateRequest request);
+
+    EmployeeResponse onboardManager1(@Valid EmployeeRequest request);
 }
