@@ -11,4 +11,3 @@ public class CustomerResponse {
     private String mobileNumber;
     private Long areaId;
 }
-ww

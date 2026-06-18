@@ -9,4 +9,6 @@ public interface CustomerQueryService {
     CustomerQueryResponse raiseQuery(@Valid CustomerQueryRequest request);
 
     CustomerQueryResponse resolveQuery(Long queryId, TenantRequest request);
+
+    CustomerQueryResponse escalateToManager1(Long queryId, @Valid TenantRequest request);
 }

@@ -46,4 +46,18 @@ public class CustomerQueryController {
                 .data(response)
                 .build());
     }
+
+    @PreAuthorize("hasRole('LOCAL_TECHNICIAN')")
+    @PatchMapping(ApiPaths.Customer.CUSTOMER_QUERY + ApiPaths.Customer.CUSTOMER_QUERY_ID + ApiPaths.Customer.CUSTOMER_QUERY_ESCALATE_TO_M1)
+    public ResponseEntity<ApplicationResponse<CustomerQueryResponse>> escalateToManager1(@PathVariable(name = "queries-id") Long queryId,
+                                                                                         @Valid @RequestBody TenantRequest request){
+        CustomerQueryResponse response = customerQueryService.escalateToManager1(queryId, request);
+
+        return ResponseEntity.ok(ApplicationResponse.<CustomerQueryResponse>builder()
+                .success(true)
+                .message("Query resolved successfully")
+                .data(response)
+                .build());
+    }
+
 }

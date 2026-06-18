@@ -42,6 +42,12 @@ public class CustomerQueryServiceImpl implements CustomerQueryService {
     @Override
     public CustomerQueryResponse resolveQuery(Long queryId, TenantRequest request) {
         TenantContext.setCurrentTenant(request.getTenantId());
-        return tenantSwitchUtil.resolveQuery(queryId);
+        return tenantSwitchUtil.updateQueryStatus(queryId, QueryStatus.RESOLVED);
+    }
+
+    @Override
+    public CustomerQueryResponse escalateToManager1(Long queryId, TenantRequest request) {
+        TenantContext.setCurrentTenant(request.getTenantId());
+        return tenantSwitchUtil.updateQueryStatus(queryId, QueryStatus.ESCALATED_M1);
     }
 }

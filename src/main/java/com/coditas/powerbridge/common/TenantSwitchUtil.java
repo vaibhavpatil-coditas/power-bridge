@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -29,12 +28,10 @@ public class TenantSwitchUtil {
         employeeRepository.save(employee);
     }
 
-    public CustomerQueryResponse resolveQuery(Long queryId) {
+    public CustomerQueryResponse updateQueryStatus(Long queryId, QueryStatus status) {
         CustomerQuery customerQuery = customerQueryRepository.findById(queryId).orElseThrow(() ->
                 new NotFoundException(ExceptionMessage.CUSTOMER_QUERY_NOT_FOUND));
-
-        log.info("Area id: {}", customerQuery.getCustomer().getArea().getId());
-        customerQuery.setStatus(QueryStatus.RESOLVED);
+        customerQuery.setStatus(status);
         CustomerQuery savedCustomerQuery = customerQueryRepository.save(customerQuery);
         return customerQueryMapper.toCustomerQueryResponse(savedCustomerQuery);
     }
