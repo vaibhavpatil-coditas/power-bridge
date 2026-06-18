@@ -22,4 +22,5 @@ public final class ExceptionMessage {
     public static final String USER_NOT_AUTHENTICATED = "User is not authenticated";
     public static final String USERNAME_OR_PASSWORD_MISMATCHED = "Username or password is wrong";
     public static final String EMPLOYEE_NOT_FOUND = "Employee not found";
+    public static final String CUSTOMER_QUERY_NOT_FOUND = "Customer query not found";
 }

@@ -6,7 +6,8 @@ import com.coditas.powerbridge.entity.CustomerQuery;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",
+        uses = CustomerMapper.class)
 public interface CustomerQueryMapper{
     @Mapping(source = "customerId", target = "customer.id")
     CustomerQuery toCustomerQuery(CustomerQueryRequest request);

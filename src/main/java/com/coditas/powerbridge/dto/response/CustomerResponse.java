@@ -9,5 +9,6 @@ public class CustomerResponse {
     private UserResponse user;
     private String address;
     private String mobileNumber;
-    private AreaResponse area;
+    private Long areaId;
 }
+ww

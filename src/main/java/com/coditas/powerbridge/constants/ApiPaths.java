@@ -102,12 +102,15 @@ public final class ApiPaths {
 
     public static final class Customer {
 
+
         private Customer() {}
         public static final String CUSTOMERS = "/customers";
         public static final String BASE = BASE_PATH + CUSTOMERS;
         public static final String ASSIGN_SERVICE_PROVIDER = "/assign-service-provider";
         public static final String ID = "/{customer-id}";
         public static final String CUSTOMER_QUERY = "/customer-queries";
+        public static final String CUSTOMER_QUERY_ID = "/{queries-id}";
+        public static final String CUSTOMER_QUERY_RESOLVE = "/resolve";
     }
 
     public static final class ElectricityBill {

@@ -1,8 +1,11 @@
 package com.coditas.powerbridge.entity;
 
+import com.coditas.powerbridge.enums.QueryStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "customer_queries")
@@ -17,4 +20,9 @@ public class CustomerQuery {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
+
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    @Column(columnDefinition = "query_status")
+    private QueryStatus status;
 }

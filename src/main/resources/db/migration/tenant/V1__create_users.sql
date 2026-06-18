@@ -24,9 +24,17 @@ CREATE TABLE bpo_states(
     CONSTRAINT  fk_state_id FOREIGN KEY (state_id) REFERENCES public.states(id)
 );
 
+CREATE TYPE reliance.query_status AS ENUM(
+    'PENDING',
+    'RESOLVED',
+    'ESCALATED_M1',
+    'ESCALATED_M2'
+);
+
 CREATE TABLE reliance.customer_queries(
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     query VARCHAR(255) NOT NULL,
     customer_id BIGINT NOT NULL,
+    statue query_status,
     CONSTRAINT fk_customer FOREIGN KEY (customer_id) REFERENCES public.customers(id)
 );
