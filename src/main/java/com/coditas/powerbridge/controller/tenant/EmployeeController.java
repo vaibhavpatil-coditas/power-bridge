@@ -1,18 +1,17 @@
 package com.coditas.powerbridge.controller.tenant;
 
 import com.coditas.powerbridge.constants.ApiPaths;
+import com.coditas.powerbridge.dto.request.BPOStateRequest;
 import com.coditas.powerbridge.dto.request.EmployeeRequest;
 import com.coditas.powerbridge.dto.response.ApplicationResponse;
+import com.coditas.powerbridge.dto.response.BPOStateResponse;
 import com.coditas.powerbridge.dto.response.EmployeeResponse;
 import com.coditas.powerbridge.service.EmployeeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
@@ -61,6 +60,21 @@ public class EmployeeController {
         return ResponseEntity.created(location).body(ApplicationResponse.<EmployeeResponse>builder()
                 .success(true)
                 .message("BPO successfully onboarded")
+                .data(response)
+                .build());
+    }
+
+    @PreAuthorize("hasRole('OPERATIONS_HEAD')")
+    @PostMapping(ApiPaths.Employee.BPO_ID + ApiPaths.State.STATES)
+    public ResponseEntity<ApplicationResponse<BPOStateResponse>> assignStateToBPO(@PathVariable(name = "bpo-id") Long bpoId,
+                                                                                  @Valid @RequestBody BPOStateRequest request){
+        BPOStateResponse response = employeeService.assignStateToBPO(bpoId, request);
+
+        URI location = URI.create(ApiPaths.BASE_PATH + ApiPaths.Employee.BPO + bpoId + ApiPaths.State.STATES);
+
+        return ResponseEntity.created(location).body(ApplicationResponse.<BPOStateResponse>builder()
+                .success(true)
+                .message("State assigned to bpo")
                 .data(response)
                 .build());
     }

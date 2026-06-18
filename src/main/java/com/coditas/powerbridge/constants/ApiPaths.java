@@ -1,17 +1,13 @@
 package com.coditas.powerbridge.constants;
 
 public final class ApiPaths {
-    private ApiPaths() {
-    }
+    private ApiPaths() {}
 
     public static final String BASE_PATH = "/api/v1";
     public static final String ON_BOARD = "/onboard";
 
     public static final class SalesTeamMember {
-
-        private SalesTeamMember() {
-        }
-
+        private SalesTeamMember() {}
         public static final String BASE = BASE_PATH + "/sales-team-members";
         public static final String TASKS = "/tasks";
     }
@@ -23,71 +19,53 @@ public final class ApiPaths {
 
 
     public static final class SuperAdmin {
-        private SuperAdmin() {
-        }
-
+        private SuperAdmin() {}
         public static final String BASE = BASE_PATH + "/super-admin";
     }
 
     public static final class Auth {
-        private Auth() {
-        }
-
+        private Auth() {}
         public static final String BASE = BASE_PATH + "/auth";
         public static final String LOGIN = "/login";
     }
 
     public static final class ManagementTeam {
-        private ManagementTeam() {
-        }
-
+        private ManagementTeam() {}
         public static final String BASE = BASE_PATH + "/management-team-members";
     }
 
     public static final class StateHead {
-        private StateHead() {
-        }
-
+        private StateHead() {}
         public static final String BASE = BASE_PATH + "/state-heads";
     }
 
     public static final class Task {
-        private Task() {
-        }
-
+        private Task() {}
         public static final String TASKS = "/tasks";
         public static final String BASE = BASE_PATH + TASKS;
     }
 
     public static final class State {
-        private State() {
-        }
-
-        public static final String BASE = BASE_PATH + "/states";
+        private State() {}
+        public static final String STATES = "/states";
         public static final String HEAD = "/head";
         public static final String ID = "/{state-id}";
     }
 
     public static final class District {
-        private District() {
-        }
-
+        private District() {}
         public static final String BASE = BASE_PATH + "/districts";
         public static final String ID = "/{district-id}";
         public static final String HEAD = "/head";
     }
 
     public static final class DistrictHead {
-        private DistrictHead() {
-        }
-
+        private DistrictHead() {}
         public static final String BASE = BASE_PATH + "/district-heads";
     }
 
     public static final class City {
-        private City() {
-        }
-
+        private City() {}
         public static final String ID = "/{city-id}";
         public static final String CITIES = "/cities";
         public static final String BASE = BASE_PATH + "/districts" + District.ID + CITIES;
@@ -95,41 +73,27 @@ public final class ApiPaths {
     }
 
     public static final class CityHead {
-        private CityHead() {
-        }
-
+        private CityHead() {}
         public static final String BASE = BASE_PATH + "/city-heads";
     }
 
     public static final class LocalTechnician {
-
-        private LocalTechnician() {
-        }
-
+        private LocalTechnician() {}
         public static final String BASE = BASE_PATH + City.CITIES + City.ID + "/local-technicians";
     }
 
     public static final class Biller {
-
-        private Biller() {
-        }
-
+        private Biller() {}
         public static final String BASE = BASE_PATH + City.CITIES + City.ID + "/biller";
     }
 
     public static final class CRM {
-
-        private CRM() {
-        }
-
+        private CRM() {}
         public static final String BASE = BASE_PATH + City.CITIES + City.ID + "/crm";
     }
 
     public static final class Area {
-
-        private Area() {
-        }
-
+        private Area() {}
         public static final String BASE = BASE_PATH + City.CITIES + City.ID + "/areas";
         public static final String ID = "/{area-id}";
         public static final String TECHNICIAN = ID + "/technician";
@@ -137,10 +101,7 @@ public final class ApiPaths {
     }
 
     public static final class Customer {
-
-        private Customer() {
-        }
-
+        private Customer() {}
         public static final String CUSTOMERS = "/customers";
         public static final String BASE = BASE_PATH + CUSTOMERS;
         public static final String ASSIGN_SERVICE_PROVIDER = "/assign-service-provider";
@@ -148,28 +109,21 @@ public final class ApiPaths {
     }
 
     public static final class ElectricityBill {
-
-        private ElectricityBill() {
-        }
-
+        private ElectricityBill() {}
         public static final String ELECTRICITY_BILL = "/electricity-bills";
     }
 
     public static final class BillerQuery {
-
-        private BillerQuery() {
-        }
-
+        private BillerQuery() {}
         public static final String BILLER_QUERY = "/biller-queries";
     }
 
     public static final class Employee {
-
         private Employee() {}
-
         public static final String BASE = BASE_PATH + "/employees";
         public static final String SALES_TEAM = "/sales-team";
         public static final String OPERATIONS_HEAD = "/operations-head";
         public static final String BPO = "/bpo";
+        public static final String BPO_ID = "/{bpo-id}";
     }
 }

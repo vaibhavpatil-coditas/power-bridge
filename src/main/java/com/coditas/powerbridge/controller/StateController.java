@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 
 @RestController
-@RequestMapping(ApiPaths.State.BASE)
+@RequestMapping(ApiPaths.BASE_PATH + ApiPaths.State.STATES)
 @RequiredArgsConstructor
 public class StateController {
 
@@ -26,7 +26,7 @@ public class StateController {
     public ResponseEntity<ApplicationResponse<StateResponse>> create(@Valid @RequestBody StateRequest request){
         StateResponse response = stateService.create(request);
 
-        URI location = URI.create(ApiPaths.State.BASE
+        URI location = URI.create(ApiPaths.BASE_PATH + ApiPaths.State.STATES
         +"/"+response.getId());
 
         return ResponseEntity.created(location).body(ApplicationResponse.<StateResponse>builder()
