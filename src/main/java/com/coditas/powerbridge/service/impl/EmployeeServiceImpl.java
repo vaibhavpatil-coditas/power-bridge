@@ -51,7 +51,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeResponse onboardManager1(EmployeeRequest request) {
-        return persistEmployee(request, Role.MANAGER1);
+        return persistEmployee(request, Role.MANAGER_1);
+    }
+
+    @Override
+    public EmployeeResponse onboardManager2(EmployeeRequest request) {
+        return persistEmployee(request, Role.MANAGER_2);
     }
 
     @Override

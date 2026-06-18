@@ -55,7 +55,19 @@ public class CustomerQueryController {
 
         return ResponseEntity.ok(ApplicationResponse.<CustomerQueryResponse>builder()
                 .success(true)
-                .message("Query resolved successfully")
+                .message("Query escalated to manager 1")
+                .data(response)
+                .build());
+    }
+
+    @PreAuthorize("hasRole('MANAGER_1')")
+    @PatchMapping(ApiPaths.Customer.CUSTOMER_QUERY + ApiPaths.Customer.CUSTOMER_QUERY_ID + ApiPaths.Customer.CUSTOMER_QUERY_ESCALATE_TO_M2)
+    public ResponseEntity<ApplicationResponse<CustomerQueryResponse>> escalateToManager2(@PathVariable(name = "queries-id") Long queryId){
+        CustomerQueryResponse response = customerQueryService.escalateToManager2(queryId);
+
+        return ResponseEntity.ok(ApplicationResponse.<CustomerQueryResponse>builder()
+                .success(true)
+                .message("Query escalated to manager 2")
                 .data(response)
                 .build());
     }

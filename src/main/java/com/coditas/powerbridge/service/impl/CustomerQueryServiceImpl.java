@@ -50,4 +50,9 @@ public class CustomerQueryServiceImpl implements CustomerQueryService {
         TenantContext.setCurrentTenant(request.getTenantId());
         return tenantSwitchUtil.updateQueryStatus(queryId, QueryStatus.ESCALATED_M1);
     }
+
+    @Override
+    public CustomerQueryResponse escalateToManager2(Long queryId) {
+        return tenantSwitchUtil.updateQueryStatus(queryId, QueryStatus.ESCALATED_M2);
+    }
 }

@@ -79,6 +79,20 @@ public class EmployeeController {
     }
 
     @PreAuthorize("hasRole('OPERATIONS_HEAD')")
+    @PostMapping(ApiPaths.Employee.MANAGER2)
+    public ResponseEntity<ApplicationResponse<EmployeeResponse>> onboardManager2(@Valid @RequestBody EmployeeRequest request){
+        EmployeeResponse response = employeeService.onboardManager2(request);
+
+        URI location = URI.create(ApiPaths.BASE_PATH + ApiPaths.Employee.MANAGER2 + "/" + response.getId());
+
+        return ResponseEntity.created(location).body(ApplicationResponse.<EmployeeResponse>builder()
+                .success(true)
+                .message("Manager-2 successfully onboarded")
+                .data(response)
+                .build());
+    }
+
+    @PreAuthorize("hasRole('OPERATIONS_HEAD')")
     @PostMapping(ApiPaths.Employee.BPO_ID + ApiPaths.State.STATES)
     public ResponseEntity<ApplicationResponse<BPOStateResponse>> assignStateToBPO(@PathVariable(name = "bpo-id") Long bpoId,
                                                                                   @Valid @RequestBody BPOStateRequest request){

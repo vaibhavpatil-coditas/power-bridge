@@ -113,6 +113,7 @@ public final class ApiPaths {
         public static final String CUSTOMER_QUERY_ID = "/{queries-id}";
         public static final String CUSTOMER_QUERY_RESOLVE = "/resolve";
         public static final String CUSTOMER_QUERY_ESCALATE_TO_M1 = "/escalate-m1";
+        public static final String CUSTOMER_QUERY_ESCALATE_TO_M2 = "/escalate-m2";
     }
 
     public static final class ElectricityBill {
@@ -127,6 +128,7 @@ public final class ApiPaths {
 
     public static final class Employee {
 
+
         private Employee() {}
         public static final String BASE = BASE_PATH + "/employees";
         public static final String SALES_TEAM = "/sales-team";
@@ -134,5 +136,6 @@ public final class ApiPaths {
         public static final String BPO = "/bpo";
         public static final String BPO_ID = "/{bpo-id}";
         public static final String MANAGER1 = "/manager-1";
+        public static final String MANAGER2 = "/manager-2";
     }
 }
