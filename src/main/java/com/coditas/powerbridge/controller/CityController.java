@@ -13,15 +13,16 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
-@RequestMapping(ApiPaths.City.BASE)
+@RequestMapping(ApiPaths.BASE_PATH)
 @RequiredArgsConstructor
 public class CityController {
 
     private final CityService cityService;
 
-    @PostMapping
+    @PostMapping(ApiPaths.City.BASE)
     @PreAuthorize("hasRole('DISTRICT_HEAD')")
     public ResponseEntity<ApplicationResponse<CityResponse>> create(@PathVariable(name = "district-id") Long districtId,
                                                                     @Valid @RequestBody CityRequest request){
@@ -38,7 +39,18 @@ public class CityController {
                 .build());
     }
 
-    @PutMapping(ApiPaths.City.ID + ApiPaths.City.HEAD)
+    @GetMapping(ApiPaths.City.BASE)
+    @PreAuthorize("permitAll()")
+    public ResponseEntity<ApplicationResponse<List<CityResponse>>> getAll(@PathVariable(name = "district-id") long districtId){
+        List<CityResponse> response = cityService.getAll(districtId);
+        return ResponseEntity.ok().body(ApplicationResponse.<List<CityResponse>>builder()
+                .success(true)
+                .message("Fetched all the cities")
+                .data(response)
+                .build());
+    }
+
+    @PutMapping(ApiPaths.City.BASE + ApiPaths.City.ID + ApiPaths.City.HEAD)
     public ResponseEntity<ApplicationResponse<CityResponse>> assignHead(@PathVariable(name = "district-id") Long districtId,
                                                                         @PathVariable(name = "city-id") Long cityId,
                                                                         @Valid @RequestBody CityHeadAssignmentRequest request){

@@ -10,7 +10,7 @@ public class CityResponse {
     private Long id;
     private String name;
     private Instant createdAt;
-    private DistrictResponse district;
-    private UserResponse cityHead;
+    private Long districtId;
+    private Long cityHeadId;
     private Instant assignedAt;
 }

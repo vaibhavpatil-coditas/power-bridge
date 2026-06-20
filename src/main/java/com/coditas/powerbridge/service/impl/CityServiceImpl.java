@@ -22,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -79,6 +80,15 @@ public class CityServiceImpl implements CityService {
         city.setAssignedAt(Instant.now());
         City savedCity = cityRepository.save(city);
         return cityMapper.toCityResponse(savedCity);
+    }
+
+    @Override
+    public List<CityResponse> getAll(long districtId) {
+        District district = districtRepository.findById(districtId).orElseThrow(()->
+                new NotFoundException(ExceptionMessage.DISTRICT_NOT_FOUND));
+        List<City> cities = cityRepository.findByDistrict(district).orElseThrow(()->
+                new NotFoundException(ExceptionMessage.CITY_NOT_FOUND));
+        return cityMapper.toCityResponseList(cities);
     }
 
 
