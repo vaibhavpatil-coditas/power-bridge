@@ -21,6 +21,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AreaServiceImpl implements AreaService {
@@ -106,5 +108,15 @@ public class AreaServiceImpl implements AreaService {
         area.setBiller(biller);
         Area savedArea = areaRepository.save(area);
         return areaMapper.toAreaResponse(savedArea);
+    }
+
+    @Override
+    public List<AreaResponse> getAll(Long cityId) {
+        City city = cityRepository.findById(cityId).orElseThrow(()->
+                new NotFoundException(ExceptionMessage.CITY_NOT_FOUND));
+
+        List<Area> areas = areaRepository.findByCity(city).orElseThrow(() ->
+                new NotFoundException(ExceptionMessage.AREA_NOT_FOUND));
+        return areaMapper.toAreaResponseList(areas);
     }
 }

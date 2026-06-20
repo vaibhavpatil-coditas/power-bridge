@@ -7,7 +7,7 @@ import lombok.Setter;
 public class AreaResponse {
     private Long id;
     private String name;
-    private CityResponse city;
-    private UserResponse technician;
-    private UserResponse biller;
+    private Long cityId;
+    private Long technicianId;
+    private Long billerId;
 }
