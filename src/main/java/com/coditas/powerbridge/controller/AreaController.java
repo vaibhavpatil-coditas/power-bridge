@@ -52,6 +52,19 @@ public class AreaController {
                 .build());
     }
 
+    @GetMapping(ApiPaths.Area.BASE + ApiPaths.Area.ID)
+    @PreAuthorize("permitAll()")
+    public ResponseEntity<ApplicationResponse<AreaResponse>> getAreaById(@PathVariable(name = "area-id") Long cityId,
+                                                                               @PathVariable(name = "city-id") Long areaId){
+        AreaResponse response = areaService.getAreaById(cityId, areaId);
+
+        return ResponseEntity.ok().body(ApplicationResponse.<AreaResponse>builder()
+                .success(true)
+                .message("Fetched all areas in the city")
+                .data(response)
+                .build());
+    }
+
     @PutMapping(ApiPaths.Area.BASE + ApiPaths.Area.TECHNICIAN)
     @PreAuthorize("hasRole('CITY_HEAD')")
     public ResponseEntity<ApplicationResponse<AreaResponse>> assignTechnician(@PathVariable(name = "city-id") Long cityId,

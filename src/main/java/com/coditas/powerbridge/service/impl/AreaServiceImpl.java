@@ -119,4 +119,13 @@ public class AreaServiceImpl implements AreaService {
                 new NotFoundException(ExceptionMessage.AREA_NOT_FOUND));
         return areaMapper.toAreaResponseList(areas);
     }
+
+    @Override
+    public AreaResponse getAreaById(Long cityId, Long areaId) {
+        City city = cityRepository.findById(cityId).orElseThrow(()->
+                new NotFoundException(ExceptionMessage.CITY_NOT_FOUND));
+        Area area = areaRepository.findById(areaId).orElseThrow(()->
+                new NotFoundException(ExceptionMessage.AREA_NOT_FOUND));
+        return areaMapper.toAreaResponse(area);
+    }
 }

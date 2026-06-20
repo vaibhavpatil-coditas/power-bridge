@@ -16,4 +16,6 @@ public interface AreaService {
     AreaResponse assignBiller(Long cityId, Long areaId, @Valid BillerAssignmentRequest request);
 
     List<AreaResponse> getAll(Long cityId);
+
+    AreaResponse getAreaById(Long cityId, Long areaId);
 }
