@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -53,5 +54,11 @@ public class StateServiceImpl implements StateService {
         state.setStateHead(user);
         State savedState = stateRepository.save(state);
         return stateMapper.toStateResponse(savedState);
+    }
+
+    @Override
+    public List<StateResponse> getAll() {
+        List<State> states = stateRepository.findAll();
+        return stateMapper.toStateResponseList(states);
     }
 }

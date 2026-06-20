@@ -48,6 +48,17 @@ public class DistrictController {
                 .build());
     }
 
+    @GetMapping(ApiPaths.District.BASE + ApiPaths.District.ID)
+    @PreAuthorize("permitAll()")
+    public ResponseEntity<ApplicationResponse<DistrictResponse>> getDistrictById(@PathVariable(name = "district-id") Long districtId){
+        DistrictResponse response = districtService.getDistrictById(districtId);
+        return ResponseEntity.ok().body(ApplicationResponse.<DistrictResponse>builder()
+                .success(true)
+                .message("Fetched all the districts")
+                .data(response)
+                .build());
+    }
+
     @PostMapping(ApiPaths.District.BASE + ApiPaths.District.ID+ApiPaths.District.HEAD)
     @PreAuthorize("hasRole('STATE_HEAD')")
     public ResponseEntity<ApplicationResponse<DistrictResponse>> assignDistrictHead(@PathVariable(required = true, name = "district-id") Long districtId,

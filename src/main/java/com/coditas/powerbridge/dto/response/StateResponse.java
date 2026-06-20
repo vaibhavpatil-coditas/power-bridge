@@ -10,6 +10,6 @@ public class StateResponse {
     private Long id;
     private String name;
     private Instant createdAt;
-    private UserResponse stateHead;
+    private Long stateHeadId;
     private Instant assignedAt;
 }

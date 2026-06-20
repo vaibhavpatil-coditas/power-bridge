@@ -88,4 +88,11 @@ public class DistrictServiceImpl implements DistrictService {
                 new NotFoundException(ExceptionMessage.DISTRICT_NOT_FOUND));
         return districtMapper.toDistrictResponseList(districts);
     }
+
+    @Override
+    public DistrictResponse getDistrictById(Long districtId) {
+        District district = districtRepository.findById(districtId).orElseThrow(() ->
+                new NotFoundException(ExceptionMessage.DISTRICT_NOT_FOUND));
+        return districtMapper.toDistrictResponse(district);
+    }
 }

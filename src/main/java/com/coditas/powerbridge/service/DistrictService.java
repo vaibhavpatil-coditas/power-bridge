@@ -13,4 +13,6 @@ public interface DistrictService {
     DistrictResponse assignDistrictHead(Long districtId, @Valid DistrictHeadAssignmentRequest request);
 
     List<DistrictResponse> getAll(Long stateId);
+
+    DistrictResponse getDistrictById(Long districtId);
 }
