@@ -91,5 +91,12 @@ public class CityServiceImpl implements CityService {
         return cityMapper.toCityResponseList(cities);
     }
 
+    @Override
+    public CityResponse getCityById(long cityId) {
+        City city = cityRepository.findById(cityId).orElseThrow(() ->
+                new NotFoundException(ExceptionMessage.CITY_NOT_FOUND));
+        return cityMapper.toCityResponse(city);
+    }
+
 
 }

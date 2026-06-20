@@ -20,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -77,5 +78,14 @@ public class DistrictServiceImpl implements DistrictService {
         district.setDistrictHead(districtHead);
         District savedDistrict = districtRepository.save(district);
         return districtMapper.toDistrictResponse(savedDistrict);
+    }
+
+    @Override
+    public List<DistrictResponse> getAll(Long stateId) {
+        State state = stateRepository.findById(stateId).orElseThrow(()->
+                new NotFoundException(ExceptionMessage.STATE_NOT_FOUND));
+        List<District> districts = districtRepository.findByState(state).orElseThrow(()->
+                new NotFoundException(ExceptionMessage.DISTRICT_NOT_FOUND));
+        return districtMapper.toDistrictResponseList(districts);
     }
 }

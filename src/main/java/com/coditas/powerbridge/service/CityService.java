@@ -13,4 +13,6 @@ public interface CityService {
     CityResponse assignHead(Long cityId, @Valid CityHeadAssignmentRequest request);
 
     List<CityResponse> getAll(long districtId);
+
+    CityResponse getCityById(long cityId);
 }

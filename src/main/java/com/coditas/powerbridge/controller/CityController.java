@@ -50,6 +50,17 @@ public class CityController {
                 .build());
     }
 
+    @GetMapping(ApiPaths.City.CITIES + ApiPaths.City.ID)
+    @PreAuthorize("permitAll()")
+    public ResponseEntity<ApplicationResponse<CityResponse>> getCityById(@PathVariable(name = "city-id") long cityId){
+        CityResponse response = cityService.getCityById(cityId);
+        return ResponseEntity.ok().body(ApplicationResponse.<CityResponse>builder()
+                .success(true)
+                .message("Fetched city by id")
+                .data(response)
+                .build());
+    }
+
     @PutMapping(ApiPaths.City.BASE + ApiPaths.City.ID + ApiPaths.City.HEAD)
     public ResponseEntity<ApplicationResponse<CityResponse>> assignHead(@PathVariable(name = "district-id") Long districtId,
                                                                         @PathVariable(name = "city-id") Long cityId,

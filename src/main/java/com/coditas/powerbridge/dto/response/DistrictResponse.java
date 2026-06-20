@@ -10,7 +10,7 @@ public class DistrictResponse {
     private Long id;
     private String name;
     private Instant createdAt;
-    private StateResponse state;
-    private UserResponse districtHead;
+    private Long stateId;
+    private Long districtHeadId;
     private Instant assignedAt;
 }

@@ -55,7 +55,7 @@ public final class ApiPaths {
 
     public static final class District {
         private District() {}
-        public static final String BASE = BASE_PATH + "/districts";
+        public static final String BASE = "/districts";
         public static final String ID = "/{district-id}";
         public static final String HEAD = "/head";
     }

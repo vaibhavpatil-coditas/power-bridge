@@ -13,15 +13,16 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
-@RequestMapping(ApiPaths.District.BASE)
+@RequestMapping(ApiPaths.BASE_PATH)
 @RequiredArgsConstructor
 public class DistrictController {
 
     private final DistrictService districtService;
 
-    @PostMapping
+    @PostMapping(ApiPaths.District.BASE)
     @PreAuthorize("hasRole('STATE_HEAD')")
     public ResponseEntity<ApplicationResponse<DistrictResponse>> create(@Valid @RequestBody DistrictRequest request){
         DistrictResponse response = districtService.create(request);
@@ -36,7 +37,18 @@ public class DistrictController {
                     .build());
     }
 
-    @PostMapping(ApiPaths.District.ID+ApiPaths.District.HEAD)
+    @GetMapping(ApiPaths.State.STATES + ApiPaths.State.ID + ApiPaths.District.BASE)
+    @PreAuthorize("permitAll()")
+    public ResponseEntity<ApplicationResponse<List<DistrictResponse>>> getAll(@PathVariable(name = "state-id") Long stateId){
+        List<DistrictResponse> response = districtService.getAll(stateId);
+        return ResponseEntity.ok().body(ApplicationResponse.<List<DistrictResponse>>builder()
+                .success(true)
+                .message("Fetched all the districts")
+                .data(response)
+                .build());
+    }
+
+    @PostMapping(ApiPaths.District.BASE + ApiPaths.District.ID+ApiPaths.District.HEAD)
     @PreAuthorize("hasRole('STATE_HEAD')")
     public ResponseEntity<ApplicationResponse<DistrictResponse>> assignDistrictHead(@PathVariable(required = true, name = "district-id") Long districtId,
                                                                                     @Valid @RequestBody DistrictHeadAssignmentRequest request){
