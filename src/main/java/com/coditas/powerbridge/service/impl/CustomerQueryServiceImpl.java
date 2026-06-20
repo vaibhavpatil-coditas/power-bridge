@@ -1,6 +1,6 @@
 package com.coditas.powerbridge.service.impl;
 
-import com.coditas.powerbridge.common.TenantSwitchUtil;
+import com.coditas.powerbridge.common.TenantUtil;
 import com.coditas.powerbridge.constants.ExceptionMessage;
 import com.coditas.powerbridge.dto.request.CustomerQueryRequest;
 import com.coditas.powerbridge.dto.request.TenantRequest;
@@ -10,12 +10,15 @@ import com.coditas.powerbridge.entity.CustomerQuery;
 import com.coditas.powerbridge.enums.QueryStatus;
 import com.coditas.powerbridge.exception.NotFoundException;
 import com.coditas.powerbridge.mapper.CustomerQueryMapper;
+import com.coditas.powerbridge.repository.CustomerQueryRepository;
 import com.coditas.powerbridge.repository.CustomerRepository;
 import com.coditas.powerbridge.service.CustomerQueryService;
 import com.coditas.powerbridge.tenant.TenantContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.Instant;
 
 @Service
 @Transactional
@@ -25,7 +28,7 @@ public class CustomerQueryServiceImpl implements CustomerQueryService {
     private final CustomerQueryMapper customerQueryMapper;
     private final CustomerQueryRepository customerQueryRepository;
     private final CustomerRepository customerRepository;
-    private final TenantSwitchUtil tenantSwitchUtil;
+    private final TenantUtil tenantUtil;
 
     @Override
     public CustomerQueryResponse raiseQuery(CustomerQueryRequest request) {
@@ -35,6 +38,7 @@ public class CustomerQueryServiceImpl implements CustomerQueryService {
         CustomerQuery customerQuery = customerQueryMapper.toCustomerQuery(request);
         customerQuery.setCustomer(customer);
         customerQuery.setStatus(QueryStatus.PENDING);
+        customerQuery.setQueryDate(Instant.now());
         CustomerQuery savedCustomerQuery = customerQueryRepository.save(customerQuery);
         return customerQueryMapper.toCustomerQueryResponse(savedCustomerQuery);
     }
@@ -42,17 +46,17 @@ public class CustomerQueryServiceImpl implements CustomerQueryService {
     @Override
     public CustomerQueryResponse resolveQuery(Long queryId, TenantRequest request) {
         TenantContext.setCurrentTenant(request.getTenantId());
-        return tenantSwitchUtil.updateQueryStatus(queryId, QueryStatus.RESOLVED);
+        return tenantUtil.resolveQuery(queryId, QueryStatus.RESOLVED);
     }
 
     @Override
     public CustomerQueryResponse escalateToManager1(Long queryId, TenantRequest request) {
         TenantContext.setCurrentTenant(request.getTenantId());
-        return tenantSwitchUtil.updateQueryStatus(queryId, QueryStatus.ESCALATED_M1);
+        return tenantUtil.escalateToManager1(queryId, QueryStatus.ESCALATED_M1);
     }
 
     @Override
     public CustomerQueryResponse escalateToManager2(Long queryId) {
-        return tenantSwitchUtil.updateQueryStatus(queryId, QueryStatus.ESCALATED_M2);
+        return tenantUtil.escalateToManager2(queryId, QueryStatus.ESCALATED_M2);
     }
 }

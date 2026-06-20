@@ -8,16 +8,18 @@ import com.coditas.powerbridge.enums.QueryStatus;
 import com.coditas.powerbridge.exception.NotFoundException;
 import com.coditas.powerbridge.mapper.CustomerQueryMapper;
 import com.coditas.powerbridge.repository.EmployeeRepository;
-import com.coditas.powerbridge.service.impl.CustomerQueryRepository;
+import com.coditas.powerbridge.repository.CustomerQueryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(propagation = Propagation.REQUIRES_NEW)
-public class TenantSwitchUtil {
+public class TenantUtil {
 
     private final EmployeeRepository employeeRepository;
     private final CustomerQueryRepository customerQueryRepository;
@@ -27,10 +29,30 @@ public class TenantSwitchUtil {
         employeeRepository.save(employee);
     }
 
-    public CustomerQueryResponse updateQueryStatus(Long queryId, QueryStatus status) {
+    public CustomerQuery getQuery(Long queryId, QueryStatus status) {
         CustomerQuery customerQuery = customerQueryRepository.findById(queryId).orElseThrow(() ->
                 new NotFoundException(ExceptionMessage.CUSTOMER_QUERY_NOT_FOUND));
         customerQuery.setStatus(status);
+        return customerQuery;
+    }
+
+    public CustomerQueryResponse resolveQuery(Long queryId, QueryStatus queryStatus) {
+        CustomerQuery customerQuery = getQuery(queryId, queryStatus);
+        customerQuery.setResolvedDate(Instant.now());
+        CustomerQuery savedCustomerQuery = customerQueryRepository.save(customerQuery);
+        return customerQueryMapper.toCustomerQueryResponse(savedCustomerQuery);
+    }
+
+    public CustomerQueryResponse escalateToManager1(Long queryId, QueryStatus queryStatus) {
+        CustomerQuery customerQuery = getQuery(queryId, queryStatus);
+        customerQuery.setFirstEscalatedOn(Instant.now());
+        CustomerQuery savedCustomerQuery = customerQueryRepository.save(customerQuery);
+        return customerQueryMapper.toCustomerQueryResponse(savedCustomerQuery);
+    }
+
+    public CustomerQueryResponse escalateToManager2(Long queryId, QueryStatus queryStatus) {
+        CustomerQuery customerQuery = getQuery(queryId, queryStatus);
+        customerQuery.setSecondEscalatedOn(Instant.now());
         CustomerQuery savedCustomerQuery = customerQueryRepository.save(customerQuery);
         return customerQueryMapper.toCustomerQueryResponse(savedCustomerQuery);
     }

@@ -36,5 +36,14 @@ CREATE TABLE reliance.customer_queries(
     query VARCHAR(255) NOT NULL,
     customer_id BIGINT NOT NULL,
     statue query_status,
+    query_date TIMESTAMPTZ DEFAULT NOW(),
+    resolved_date TIMESTAMPTZ,
+    first_escalated_on TIMESTAMPTZ,
+    second_escalated_on TIMESTAMPTZ,
     CONSTRAINT fk_customer FOREIGN KEY (customer_id) REFERENCES public.customers(id)
+);
+
+CREATE TABLE reliance.meter_service_providers(
+    meter_type public.meter_type PRIMARY KEY,
+    rate_per_unit DECIMAL(2, 2) NOT NULL
 );

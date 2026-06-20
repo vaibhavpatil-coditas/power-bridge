@@ -14,7 +14,8 @@ public final class ApiPaths {
 
     public static final class ServiceProvider {
         private ServiceProvider() {}
-        public static final String BASE = BASE_PATH + "/service-providers";
+        public static final String BASE = "/service-providers";
+        public static final String METER = "/meters";
     }
 
 

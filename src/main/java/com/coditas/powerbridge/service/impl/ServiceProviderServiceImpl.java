@@ -1,22 +1,22 @@
 package com.coditas.powerbridge.service.impl;
 
-import com.coditas.powerbridge.common.TenantSwitchUtil;
+import com.coditas.powerbridge.common.TenantUtil;
 import com.coditas.powerbridge.constants.ExceptionMessage;
+import com.coditas.powerbridge.dto.request.MeterServiceProviderRequest;
 import com.coditas.powerbridge.dto.request.ServiceProviderRequest;
+import com.coditas.powerbridge.dto.response.MeterServiceProviderResponse;
 import com.coditas.powerbridge.dto.response.ServiceProviderResponse;
-import com.coditas.powerbridge.entity.Employee;
-import com.coditas.powerbridge.entity.ServiceProvider;
-import com.coditas.powerbridge.entity.User;
+import com.coditas.powerbridge.entity.*;
 import com.coditas.powerbridge.enums.Role;
 import com.coditas.powerbridge.exception.ResourceAlreadyExistException;
 import com.coditas.powerbridge.mapper.EmployeeMapper;
+import com.coditas.powerbridge.mapper.MeterServiceProviderMapper;
 import com.coditas.powerbridge.mapper.ServiceProviderMapper;
-import com.coditas.powerbridge.repository.EmployeeRepository;
+import com.coditas.powerbridge.repository.MeterServiceProviderRepository;
 import com.coditas.powerbridge.repository.ServiceProviderRepository;
 import com.coditas.powerbridge.service.ServiceProviderService;
 import com.coditas.powerbridge.tenant.TenantContext;
 import com.coditas.powerbridge.tenant.TenantMigrationService;
-import com.coditas.powerbridge.tenant.TenantSchemaConnectionProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,10 +34,10 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
     private final ServiceProviderMapper serviceProviderMapper;
     private final ServiceProviderRepository serviceProviderRepository;
     private final EmployeeMapper employeeMapper;
-    private final EmployeeRepository employeeRepository;
     private final PasswordEncoder passwordEncoder;
-    private final TenantSchemaConnectionProvider tenantSchemaConnectionProvider;
-    private final TenantSwitchUtil tenantSwitchUtil;
+    private final TenantUtil tenantUtil;
+    private final MeterServiceProviderRepository meterServiceProviderRepository;
+    private final MeterServiceProviderMapper meterServiceProviderMapper;
 
     @Override
     @Transactional
@@ -65,7 +65,15 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
         tenantMigrationService.onboardTenant(emailDomain);
         ServiceProvider savedServiceProvider = serviceProviderRepository.save(serviceProvider);
         TenantContext.setCurrentTenant(emailDomain);
-        tenantSwitchUtil.saveEmployee(employee);
+        tenantUtil.saveEmployee(employee);
         return serviceProviderMapper.toServiceProviderResponse(savedServiceProvider);
+    }
+
+    @Override
+    public MeterServiceProviderResponse create(MeterServiceProviderRequest request) {
+        MeterServiceProvider meterServiceProvider = meterServiceProviderMapper.toMeterServiceProvider(request);
+        meterServiceProvider.setId(new MeterServiceProviderId(request.getMeterType(), request.getServiceProviderId()));
+        MeterServiceProvider savedResponse = meterServiceProviderRepository.save(meterServiceProvider);
+        return meterServiceProviderMapper.toMeterServiceProviderResponse(savedResponse);
     }
 }
