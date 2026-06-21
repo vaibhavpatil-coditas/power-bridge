@@ -52,11 +52,10 @@ public class AreaController {
                 .build());
     }
 
-    @GetMapping(ApiPaths.Area.BASE + ApiPaths.Area.ID)
+    @GetMapping(ApiPaths.Area.AREA + ApiPaths.Area.ID)
     @PreAuthorize("permitAll()")
-    public ResponseEntity<ApplicationResponse<AreaResponse>> getAreaById(@PathVariable(name = "area-id") Long cityId,
-                                                                               @PathVariable(name = "city-id") Long areaId){
-        AreaResponse response = areaService.getAreaById(cityId, areaId);
+    public ResponseEntity<ApplicationResponse<AreaResponse>> getAreaById(@PathVariable(name = "area-id") Long areaId){
+        AreaResponse response = areaService.getAreaById(areaId);
 
         return ResponseEntity.ok().body(ApplicationResponse.<AreaResponse>builder()
                 .success(true)

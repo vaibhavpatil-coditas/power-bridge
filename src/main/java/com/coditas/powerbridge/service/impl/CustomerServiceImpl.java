@@ -25,6 +25,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
@@ -48,9 +50,7 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setArea(area);
         customer.setUser(userMapper.userResponseToUser(userResponse));
         Customer savedCustomer = customerRepository.save(customer);
-        CustomerResponse customerResponse = customerMapper.toCustomerResponse(savedCustomer);
-        customerResponse.setUser(userResponse);
-        return customerResponse;
+        return customerMapper.toCustomerResponse(savedCustomer);
     }
 
     @Override
@@ -60,5 +60,11 @@ public class CustomerServiceImpl implements CustomerService {
         userServiceProvider.setId(userServiceProviderId);
         UserServiceProvider savedUserServiceProvider = userServiceProviderRepository.save(userServiceProvider);
         return userServiceProviderMapper.toUserServiceProviderReponse(savedUserServiceProvider);
+    }
+
+    @Override
+    public List<CustomerResponse> getAll() {
+        List<Customer> customers = customerRepository.findAll();
+        return customerMapper.toCustomerResponseList(customers);
     }
 }

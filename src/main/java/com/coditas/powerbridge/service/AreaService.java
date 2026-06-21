@@ -17,5 +17,5 @@ public interface AreaService {
 
     List<AreaResponse> getAll(Long cityId);
 
-    AreaResponse getAreaById(Long cityId, Long areaId);
+    AreaResponse getAreaById(Long areaId);
 }

@@ -11,26 +11,24 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
-@RequestMapping(ApiPaths.Customer.BASE)
+@RequestMapping(ApiPaths.BASE_PATH)
 @RequiredArgsConstructor
 public class CustomerController {
 
     private final CustomerService customerService;
 
-    @PostMapping
+    @PostMapping(ApiPaths.Customer.CUSTOMERS)
     @PreAuthorize("hasRole('CRM')")
     public ResponseEntity<ApplicationResponse<CustomerResponse>> create(@Valid @RequestBody CustomerRequest request){
         CustomerResponse response = customerService.create(request);
 
-        URI location = URI.create(ApiPaths.Customer.BASE+
+        URI location = URI.create(ApiPaths.Customer.CUSTOMERS+
                 "/"+response.getId());
 
         return ResponseEntity.created(location).body(ApplicationResponse.<CustomerResponse>builder()
@@ -40,8 +38,19 @@ public class CustomerController {
                 .build());
     }
 
+    @GetMapping(ApiPaths.Customer.CUSTOMERS)
     @PreAuthorize("hasRole('CRM')")
-    @PostMapping(ApiPaths.Customer.ASSIGN_SERVICE_PROVIDER)
+    public ResponseEntity<ApplicationResponse<List<CustomerResponse>>> getAll(){
+        List<CustomerResponse> response = customerService.getAll();
+        return ResponseEntity.ok().body(ApplicationResponse.<List<CustomerResponse>>builder()
+                .success(true)
+                .message("Customers fetched successfully")
+                .data(response)
+                .build());
+    }
+
+    @PreAuthorize("hasRole('CRM')")
+    @PostMapping(ApiPaths.Customer.CUSTOMERS + ApiPaths.Customer.ASSIGN_SERVICE_PROVIDER)
     public ResponseEntity<ApplicationResponse<UserServiceProviderReponse>> assignServiceProvider(@Valid @RequestBody UserServiceProviderRequest request){
 
         UserServiceProviderReponse response = customerService.assignServiceProvider(request);

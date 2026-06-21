@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter @Setter
 public class CustomerResponse {
     private Long id;
-    private UserResponse user;
+    private Long userId;
     private String address;
     private String mobileNumber;
     private Long areaId;

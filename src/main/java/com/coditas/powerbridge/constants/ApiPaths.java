@@ -69,7 +69,7 @@ public final class ApiPaths {
         private City() {}
         public static final String ID = "/{city-id}";
         public static final String CITIES = "/cities";
-        public static final String BASE = "/districts" + District.ID + CITIES;
+        public static final String BASE = District.BASE + District.ID + CITIES;
         public static final String HEAD = "/head";
     }
 
@@ -95,7 +95,8 @@ public final class ApiPaths {
 
     public static final class Area {
         private Area() {}
-        public static final String BASE = City.CITIES + City.ID + "/areas";
+        public static final String AREA = "/areas";
+        public static final String BASE = City.CITIES + City.ID + AREA;
         public static final String ID = "/{area-id}";
         public static final String TECHNICIAN = ID + "/technician";
         public static final String BILLER = ID + "/biller";
@@ -107,7 +108,6 @@ public final class ApiPaths {
 
         private Customer() {}
         public static final String CUSTOMERS = "/customers";
-        public static final String BASE = BASE_PATH + CUSTOMERS;
         public static final String ASSIGN_SERVICE_PROVIDER = "/assign-service-provider";
         public static final String ID = "/{customer-id}";
         public static final String CUSTOMER_QUERY = "/customer-queries";

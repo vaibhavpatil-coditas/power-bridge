@@ -6,10 +6,15 @@ import com.coditas.powerbridge.entity.Customer;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring", uses = {UserMapper.class, AreaMapper.class})
 public interface CustomerMapper {
     Customer toCustomer(CustomerRequest request);
 
+    @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "area.id", target = "areaId")
     CustomerResponse toCustomerResponse(Customer customer);
+
+    List<CustomerResponse> toCustomerResponseList(List<Customer> customers);
 }
