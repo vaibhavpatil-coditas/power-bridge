@@ -14,4 +14,6 @@ public interface CustomerService {
     UserServiceProviderReponse assignServiceProvider(@Valid UserServiceProviderRequest request);
 
     List<CustomerResponse> getAll();
+
+    CustomerResponse getCustomerById(Long customerId);
 }

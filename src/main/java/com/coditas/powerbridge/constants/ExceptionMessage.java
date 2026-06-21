@@ -1,6 +1,7 @@
 package com.coditas.powerbridge.constants;
 
 public final class ExceptionMessage {
+
     private ExceptionMessage(){}
     public static final String STATE_NOT_FOUND = "State not found";
     public static final String DISTRICT_NOT_FOUND = "District not found";
@@ -23,4 +24,5 @@ public final class ExceptionMessage {
     public static final String USERNAME_OR_PASSWORD_MISMATCHED = "Username or password is wrong";
     public static final String EMPLOYEE_NOT_FOUND = "Employee not found";
     public static final String CUSTOMER_QUERY_NOT_FOUND = "Customer query not found";
+    public static final String CUSTOMER_NOT_FOUND = "Customer not found";
 }

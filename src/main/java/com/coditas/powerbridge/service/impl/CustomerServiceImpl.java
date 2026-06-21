@@ -67,4 +67,11 @@ public class CustomerServiceImpl implements CustomerService {
         List<Customer> customers = customerRepository.findAll();
         return customerMapper.toCustomerResponseList(customers);
     }
+
+    @Override
+    public CustomerResponse getCustomerById(Long customerId) {
+        Customer customer = customerRepository.findById(customerId).orElseThrow(() ->
+                new NotFoundException(ExceptionMessage.CUSTOMER_NOT_FOUND));
+        return customerMapper.toCustomerResponse(customer);
+    }
 }

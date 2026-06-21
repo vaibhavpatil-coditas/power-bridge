@@ -52,7 +52,7 @@ public class AreaController {
                 .build());
     }
 
-    @GetMapping(ApiPaths.Area.AREA + ApiPaths.Area.ID)
+    @GetMapping(ApiPaths.Area.AREAS + ApiPaths.Area.ID)
     @PreAuthorize("permitAll()")
     public ResponseEntity<ApplicationResponse<AreaResponse>> getAreaById(@PathVariable(name = "area-id") Long areaId){
         AreaResponse response = areaService.getAreaById(areaId);

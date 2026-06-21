@@ -95,8 +95,8 @@ public final class ApiPaths {
 
     public static final class Area {
         private Area() {}
-        public static final String AREA = "/areas";
-        public static final String BASE = City.CITIES + City.ID + AREA;
+        public static final String AREAS = "/areas";
+        public static final String BASE = City.CITIES + City.ID + AREAS;
         public static final String ID = "/{area-id}";
         public static final String TECHNICIAN = ID + "/technician";
         public static final String BILLER = ID + "/biller";

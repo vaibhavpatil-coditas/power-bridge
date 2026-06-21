@@ -49,6 +49,17 @@ public class CustomerController {
                 .build());
     }
 
+    @GetMapping(ApiPaths.Customer.CUSTOMERS + ApiPaths.Customer.ID)
+    @PreAuthorize("hasRole('CRM')")
+    public ResponseEntity<ApplicationResponse<CustomerResponse>> getCustomerById(@PathVariable(name = "customer-id") Long customerId){
+        CustomerResponse response = customerService.getCustomerById(customerId);
+        return ResponseEntity.ok().body(ApplicationResponse.<CustomerResponse>builder()
+                .success(true)
+                .message("Customers fetched successfully")
+                .data(response)
+                .build());
+    }
+
     @PreAuthorize("hasRole('CRM')")
     @PostMapping(ApiPaths.Customer.CUSTOMERS + ApiPaths.Customer.ASSIGN_SERVICE_PROVIDER)
     public ResponseEntity<ApplicationResponse<UserServiceProviderReponse>> assignServiceProvider(@Valid @RequestBody UserServiceProviderRequest request){
