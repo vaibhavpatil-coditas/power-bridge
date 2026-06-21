@@ -40,4 +40,14 @@ public class BillerQueryController {
                 .data(response)
                 .build());
     }
+
+    @GetMapping(ApiPaths.BillerQuery.BILLER_QUERY + ApiPaths.BillerQuery.ID)
+    public ResponseEntity<ApplicationResponse<BillerQueryResponse>> getQueryById(@PathVariable(name = "biller-id") Long billerId){
+        BillerQueryResponse response = billerQueryService.getQueryById(billerId);
+        return ResponseEntity.ok().body(ApplicationResponse.<BillerQueryResponse>builder()
+                .success(true)
+                .message("Fetched all queries")
+                .data(response)
+                .build());
+    }
 }

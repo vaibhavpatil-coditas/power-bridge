@@ -1,10 +1,12 @@
 package com.coditas.powerbridge.service.impl;
 
+import com.coditas.powerbridge.constants.ExceptionMessage;
 import com.coditas.powerbridge.dto.request.BillerQueryRequest;
 import com.coditas.powerbridge.dto.response.BillerQueryResponse;
 import com.coditas.powerbridge.entity.BillerQuery;
 import com.coditas.powerbridge.entity.User;
 import com.coditas.powerbridge.enums.BillerQueryStatus;
+import com.coditas.powerbridge.exception.NotFoundException;
 import com.coditas.powerbridge.mapper.BillerQueryMapper;
 import com.coditas.powerbridge.repository.BillerQueryRepository;
 import com.coditas.powerbridge.service.BillerQueryService;
@@ -39,5 +41,12 @@ public class BillerQueryServiceImpl implements BillerQueryService {
     public List<BillerQueryResponse> getAllQueries() {
         List<BillerQuery> queries = billerQueryRepository.findAll();
         return billerQueryMapper.toBillerQueryResponseList(queries);
+    }
+
+    @Override
+    public BillerQueryResponse getQueryById(Long billerId) {
+        BillerQuery billerQuery = billerQueryRepository.findById(billerId).orElseThrow(() ->
+                new NotFoundException(ExceptionMessage.BILLER_QUERY_NOT_FOUND));
+        return billerQueryMapper.toBillerQueryResponse(billerQuery);
     }
 }

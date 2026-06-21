@@ -10,4 +10,6 @@ public interface BillerQueryService {
     BillerQueryResponse raiseQuery(@Valid BillerQueryRequest request);
 
     List<BillerQueryResponse> getAllQueries();
+
+    BillerQueryResponse getQueryById(Long billerId);
 }

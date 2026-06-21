@@ -18,12 +18,6 @@ public final class ApiPaths {
         public static final String METER = "/meters";
     }
 
-
-    public static final class SuperAdmin {
-        private SuperAdmin() {}
-        public static final String BASE = BASE_PATH + "/super-admin";
-    }
-
     public static final class Auth {
         private Auth() {}
         public static final String BASE = BASE_PATH + "/auth";
@@ -123,8 +117,10 @@ public final class ApiPaths {
     }
 
     public static final class BillerQuery {
+
         private BillerQuery() {}
         public static final String BILLER_QUERY = "/biller-queries";
+        public static final String ID = "/{biller-id}";
     }
 
     public static final class Employee {
