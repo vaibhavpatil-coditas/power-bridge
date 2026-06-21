@@ -3,6 +3,7 @@ package com.coditas.powerbridge.constants;
 public final class ExceptionMessage {
 
 
+
     private ExceptionMessage(){}
     public static final String STATE_NOT_FOUND = "State not found";
     public static final String DISTRICT_NOT_FOUND = "District not found";
@@ -27,4 +28,5 @@ public final class ExceptionMessage {
     public static final String CUSTOMER_QUERY_NOT_FOUND = "Customer query not found";
     public static final String CUSTOMER_NOT_FOUND = "Customer not found";
     public static final String BILLER_QUERY_NOT_FOUND = "Biller query not found";
+    public static final String ELECTRICITY_BILL_NOT_FOUND = "Electricity bill not found";
 }

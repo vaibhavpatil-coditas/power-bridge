@@ -78,8 +78,12 @@ public final class ApiPaths {
     }
 
     public static final class Biller {
+
+
         private Biller() {}
-        public static final String BASE = BASE_PATH + City.CITIES + City.ID + "/biller";
+        public static final String BILLER = "/biller";
+        public static final String ID = "/{biller-id}";
+        public static final String BASE = BASE_PATH + City.CITIES + City.ID + BILLER;
     }
 
     public static final class CRM {
@@ -112,15 +116,17 @@ public final class ApiPaths {
     }
 
     public static final class ElectricityBill {
+
         private ElectricityBill() {}
         public static final String ELECTRICITY_BILL = "/electricity-bills";
+        public static final String ID = "/{electricity-bill-id}";
     }
 
     public static final class BillerQuery {
 
         private BillerQuery() {}
         public static final String BILLER_QUERY = "/biller-queries";
-        public static final String ID = "/{biller-id}";
+        public static final String ID = "/{query-id}";
     }
 
     public static final class Employee {

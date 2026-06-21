@@ -9,6 +9,7 @@ import com.coditas.powerbridge.enums.BillerQueryStatus;
 import com.coditas.powerbridge.exception.NotFoundException;
 import com.coditas.powerbridge.mapper.BillerQueryMapper;
 import com.coditas.powerbridge.repository.BillerQueryRepository;
+import com.coditas.powerbridge.repository.UserRepository;
 import com.coditas.powerbridge.service.BillerQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -23,6 +24,7 @@ public class BillerQueryServiceImpl implements BillerQueryService {
 
     private final BillerQueryMapper billerQueryMapper;
     private final BillerQueryRepository billerQueryRepository;
+    private final UserRepository userRepository;
 
     @Override
     public BillerQueryResponse raiseQuery(BillerQueryRequest request) {
@@ -44,8 +46,17 @@ public class BillerQueryServiceImpl implements BillerQueryService {
     }
 
     @Override
-    public BillerQueryResponse getQueryById(Long billerId) {
-        BillerQuery billerQuery = billerQueryRepository.findById(billerId).orElseThrow(() ->
+    public BillerQueryResponse getQueryByQueryId(Long queryId) {
+        BillerQuery billerQuery = billerQueryRepository.findById(queryId).orElseThrow(() ->
+                new NotFoundException(ExceptionMessage.BILLER_QUERY_NOT_FOUND));
+        return billerQueryMapper.toBillerQueryResponse(billerQuery);
+    }
+
+    @Override
+    public BillerQueryResponse getQueryByBillerId(Long billerId) {
+        User biller = userRepository.findById(billerId).orElseThrow(()->
+                new NotFoundException(ExceptionMessage.USER_NOT_FOUND));
+        BillerQuery billerQuery = billerQueryRepository.findByBiller(biller).orElseThrow(()->
                 new NotFoundException(ExceptionMessage.BILLER_QUERY_NOT_FOUND));
         return billerQueryMapper.toBillerQueryResponse(billerQuery);
     }

@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -35,5 +36,29 @@ public class ElectricityBillServiceImpl implements ElectricityBillService {
         electricityBill.setGeneratedAt(Instant.now());
         ElectricityBill savedElectricityBill = electricityBillRepository.save(electricityBill);
         return electricityBillMapper.toElectricityBillResponse(savedElectricityBill);
+    }
+
+    @Override
+    public List<ElectricityBillResponse> getAllBills() {
+        List<ElectricityBill> bills = electricityBillRepository.findAll();
+        return electricityBillMapper.toElectricityBillResponseList(bills);
+    }
+
+    @Override
+    public ElectricityBillResponse getBillByElectricityBillId(Long id) {
+        ElectricityBill electricityBill = electricityBillRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(ExceptionMessage.ELECTRICITY_BILL_NOT_FOUND));
+        return electricityBillMapper.toElectricityBillResponse(electricityBill);
+    }
+
+    @Override
+    public List<ElectricityBillResponse> getBillsByCustomerId(Long id) {
+        Customer customer = customerRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(ExceptionMessage.USER_NOT_FOUND));
+        List<ElectricityBill> electricityBills = electricityBillRepository.findByCustomer(customer);
+        if(electricityBills.isEmpty()){
+            throw new NotFoundException(ExceptionMessage.ELECTRICITY_BILL_NOT_FOUND);
+        }
+        return electricityBillMapper.toElectricityBillResponseList(electricityBills);
     }
 }

@@ -42,12 +42,24 @@ public class BillerQueryController {
     }
 
     @GetMapping(ApiPaths.BillerQuery.BILLER_QUERY + ApiPaths.BillerQuery.ID)
-    public ResponseEntity<ApplicationResponse<BillerQueryResponse>> getQueryById(@PathVariable(name = "biller-id") Long billerId){
-        BillerQueryResponse response = billerQueryService.getQueryById(billerId);
+    public ResponseEntity<ApplicationResponse<BillerQueryResponse>> getQueryByQueryId(@PathVariable(name = "query-id") Long queryId){
+        BillerQueryResponse response = billerQueryService.getQueryByQueryId(queryId);
         return ResponseEntity.ok().body(ApplicationResponse.<BillerQueryResponse>builder()
                 .success(true)
-                .message("Fetched all queries")
+                .message("Fetched query by id")
                 .data(response)
                 .build());
     }
+
+    @GetMapping(ApiPaths.Biller.BILLER + ApiPaths.Biller.ID + ApiPaths.BillerQuery.BILLER_QUERY)
+    public ResponseEntity<ApplicationResponse<BillerQueryResponse>> getQueryByBillerId(@PathVariable(name = "biller-id") Long billerId){
+        BillerQueryResponse response = billerQueryService.getQueryByBillerId(billerId);
+        return ResponseEntity.ok().body(ApplicationResponse.<BillerQueryResponse>builder()
+                .success(true)
+                .message("Fetched all queries for biller")
+                .data(response)
+                .build());
+    }
+
+
 }

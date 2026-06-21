@@ -11,5 +11,7 @@ public interface BillerQueryService {
 
     List<BillerQueryResponse> getAllQueries();
 
-    BillerQueryResponse getQueryById(Long billerId);
+    BillerQueryResponse getQueryByQueryId(Long queryId);
+
+    BillerQueryResponse getQueryByBillerId(Long billerId);
 }
