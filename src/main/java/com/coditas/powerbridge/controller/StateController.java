@@ -48,6 +48,17 @@ public class StateController {
                 .build());
     }
 
+    @GetMapping(ApiPaths.State.STATES + ApiPaths.State.ID)
+    @PreAuthorize("permitAll()")
+    public ResponseEntity<ApplicationResponse<StateResponse>> getStateById(@PathVariable(name = "state-id") Long stateId){
+        StateResponse response = stateService.getStateById(stateId);
+        return ResponseEntity.ok().body(ApplicationResponse.<StateResponse>builder()
+                .success(true)
+                .message("Fetched all states")
+                .data(response)
+                .build());
+    }
+
     @PutMapping(ApiPaths.State.STATES + ApiPaths.State.ID + ApiPaths.State.HEAD)
     @PreAuthorize("hasRole('MANAGEMENT_TEAM_MEMBER')")
     public ResponseEntity<ApplicationResponse<StateResponse>> assignStateHead(@PathVariable(name = "state-id") Long stateId,

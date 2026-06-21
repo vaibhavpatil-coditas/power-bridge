@@ -13,4 +13,6 @@ public interface StateService {
     StateResponse assignStateHead(Long stateId, @Valid StateHeadAssignmentRequest request);
 
     List<StateResponse> getAll();
+
+    StateResponse getStateById(Long stateId);
 }

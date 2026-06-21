@@ -61,4 +61,11 @@ public class StateServiceImpl implements StateService {
         List<State> states = stateRepository.findAll();
         return stateMapper.toStateResponseList(states);
     }
+
+    @Override
+    public StateResponse getStateById(Long stateId) {
+        State state = stateRepository.findById(stateId).orElseThrow(() ->
+                new NotFoundException(ExceptionMessage.STATE_NOT_FOUND));
+        return stateMapper.toStateResponse(state);
+    }
 }
