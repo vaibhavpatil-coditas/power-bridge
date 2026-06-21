@@ -13,6 +13,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class BillerQueryServiceImpl implements BillerQueryService {
@@ -31,5 +33,11 @@ public class BillerQueryServiceImpl implements BillerQueryService {
         billerQuery.setBiller(biller);
         BillerQuery savedBillerQuery = billerQueryRepository.save(billerQuery);
         return billerQueryMapper.toBillerQueryResponse(savedBillerQuery);
+    }
+
+    @Override
+    public List<BillerQueryResponse> getAllQueries() {
+        List<BillerQuery> queries = billerQueryRepository.findAll();
+        return billerQueryMapper.toBillerQueryResponseList(queries);
     }
 }

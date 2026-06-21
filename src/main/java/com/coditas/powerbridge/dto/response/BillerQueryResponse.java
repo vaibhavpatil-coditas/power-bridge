@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter @Setter
 public class BillerQueryResponse {
     private Long id;
-    private UserResponse biller;
+    private Long billerId;
     private String query;
     private BillerQueryStatus status;
 }
